@@ -10,6 +10,8 @@
 
 （3） Bean named 'ddlApplicationRunner' is expected to be of type 'org.springframework.boot.Runner' but was actually of type 'org.springframework.beans.factory.support.NullBean'
 
+（4）时区问题  连接数据库的时候出现的问题
+
 
 
 版本对比

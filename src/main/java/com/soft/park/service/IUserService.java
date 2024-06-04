@@ -3,6 +3,7 @@ package com.soft.park.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.soft.park.dto.UserDTO;
 import com.soft.park.entity.UserEntity;
+import com.soft.park.vo.UserVO;
 
 /**
  * @version 1.0
@@ -20,5 +21,7 @@ public interface IUserService extends IService<UserEntity> {
 	 * @return
 	 */
 	UserDTO login(String userName,String password,String type);
+
+	UserDTO addUser(UserVO userVO);
 
 }

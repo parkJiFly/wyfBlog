@@ -13,7 +13,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/wyfblog?serverTimeZone=UTC
+    url: jdbc:mysql://localhost:3306/wyfblog?allowPublicKeyRetrieval=true&characterEncoding=utf-8&rewriteBatchedStatements=true&serverTimezone=Asia/Shanghai
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
