@@ -35,7 +35,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,UserEntity> implemen
 	@Override
 	public UserDTO login(String userName,String password,String type) {
 		UserDTO userDTO = new UserDTO();
-		userDTO.setPassword(SaltMD5Utils.MD5(password));
+		userDTO.setPassword(SaltMD5Utils.generateSaltPassword(password));
+
+		String pass = SaltMD5Utils.generateSaltPassword(password);
+		boolean b = SaltMD5Utils.verifySaltPassword(password, pass);
 		return userDTO;
 	}
 
