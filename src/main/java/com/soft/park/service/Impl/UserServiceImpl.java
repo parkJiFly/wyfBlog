@@ -1,5 +1,6 @@
 package com.soft.park.service.Impl;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.soft.park.dto.UserDTO;
@@ -46,7 +47,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,UserEntity> implemen
 		List<UserEntity> userEntities = baseMapper.selectList(queryWrapper);
 		if(userEntities.size()  ==   1){
 			if(SaltMD5Utils.verifySaltPassword(password,userEntities.getFirst().getPassword())){
-				return BeanUtil.copy(userEntities.getFirst(),UserDTO.class);
+				UserDTO copy = BeanUtil.copy(userEntities.getFirst(), UserDTO.class);
+				String tokenValue = StpUtil.getTokenValue();
+				copy.setSaToken(tokenValue);
+				return copy;
 			}
 		}
 		return null;
@@ -62,5 +66,4 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,UserEntity> implemen
 		baseMapper.insert(userEntity);
 		return BeanUtil.copy(userEntity,UserDTO.class);
 	}
-
 }

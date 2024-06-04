@@ -8,7 +8,7 @@ server:
     active-timeout: -1
     is-concurrent: true
     is-share: true
-    token-style: uuid
+    token-style: simple-uuid
     is-log: true
 
 spring:
