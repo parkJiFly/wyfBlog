@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("/user")
+@RequestMapping
 public class LoginController {
 
 	@Resource
@@ -27,11 +27,13 @@ public class LoginController {
 
 	/**
 	 * 登录
-	 * @param userVO
+	 * @param userName
+	 * @param password
+	 * @param type
 	 * @return
 	 */
 	@PostMapping("/login")
-	public Result<UserDTO> login(@RequestBody UserVO userVO){
-		return Result.success(iUserService.login(userVO));
+	public Result<UserDTO> login(String userName,String password,String type){
+		return Result.success(iUserService.login(userName,password,type));
 	}
 }

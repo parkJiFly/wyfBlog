@@ -5,9 +5,10 @@ import com.soft.park.dto.UserDTO;
 import com.soft.park.entity.UserEntity;
 import com.soft.park.mapper.UserMapper;
 import com.soft.park.service.IUserService;
-import com.soft.park.vo.UserVO;
+import com.soft.park.utils.SaltMD5Utils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -21,14 +22,21 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class UserServiceImpl extends ServiceImpl<UserMapper,UserEntity> implements IUserService {
 
+	@Autowired
+	private UserMapper userMapper;
+
 	/**
 	 * 进行登录功能
-	 * @param userVO
+	 * @param userName
+	 * @param password
+	 * @param type
 	 * @return
 	 */
 	@Override
-	public UserDTO login(UserVO userVO) {
-		return null;
+	public UserDTO login(String userName,String password,String type) {
+		UserDTO userDTO = new UserDTO();
+		userDTO.setPassword(SaltMD5Utils.MD5(password));
+		return userDTO;
 	}
 
 }
