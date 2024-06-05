@@ -70,7 +70,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,UserEntity> implemen
 		userEntity.setPassword(SaltMD5Utils.generateSaltPassword(userVO.getPassword()));
 		LocalDateTime localDateTime = LocalDateTime.now();
 		userEntity.setRegisterTime(localDateTime);
-		baseMapper.insert(userEntity);
+		super.saveOrUpdate(userEntity);
 		return BeanUtil.copy(userEntity,UserDTO.class);
 	}
 
