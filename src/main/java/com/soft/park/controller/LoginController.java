@@ -38,6 +38,7 @@ public class LoginController {
 	@Operation(summary = "登录操作")
 	public Result<UserDTO> login(String userName, String password, String type) {
 		return Result.success(iUserService.login(userName, password, type));
+
 	}
 
 }
