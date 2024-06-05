@@ -24,4 +24,6 @@ public interface IUserService extends IService<UserEntity> {
 
 	UserDTO addUser(UserVO userVO);
 
+	UserDTO detail(Long id);
+
 }

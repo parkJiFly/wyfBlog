@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -48,6 +49,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,UserEntity> implemen
 		if(userEntities.size()  ==   1){
 			if(SaltMD5Utils.verifySaltPassword(password,userEntities.getFirst().getPassword())){
 				UserDTO copy = BeanUtil.copy(userEntities.getFirst(), UserDTO.class);
+				StpUtil.login(userEntities.getFirst().getId());
 				String tokenValue = StpUtil.getTokenValue();
 				copy.setSaToken(tokenValue);
 				return copy;
@@ -56,6 +58,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,UserEntity> implemen
 		return null;
 	}
 
+	/**
+	 * 新增用户
+	 * @param userVO
+	 * @return
+	 */
 	@Override
 	public UserDTO addUser(UserVO userVO) {
 		UserEntity userEntity = new UserEntity();
@@ -66,4 +73,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,UserEntity> implemen
 		baseMapper.insert(userEntity);
 		return BeanUtil.copy(userEntity,UserDTO.class);
 	}
+
+	/**
+	 * 查看用户详情
+	 * @param id
+	 * @return
+	 */
+	@Override
+	public UserDTO detail(Long id) {
+		UserEntity userEntity = baseMapper.selectById(id);
+		if(ObjectUtils.isEmpty(userEntity)){
+			return null;
+		}
+		return BeanUtil.copy(userEntity,UserDTO.class);
+	}
+
 }
