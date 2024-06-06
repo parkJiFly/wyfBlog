@@ -36,18 +36,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,UserEntity> implemen
 
 	/**
 	 * 进行登录功能
-	 * @param userName
-	 * @param password
-	 * @param type
 	 * @return
 	 */
 	@Override
-	public UserDTO login(String userName,String password,String type) {
+	public UserDTO login(UserVO userVO) {
 		LambdaQueryWrapper<UserEntity> queryWrapper = new LambdaQueryWrapper<>();
-		queryWrapper.eq(UserEntity::getUserName,userName);
+		queryWrapper.eq(UserEntity::getUserName,userVO.getUserName());
 		List<UserEntity> userEntities = baseMapper.selectList(queryWrapper);
 		if(userEntities.size()  ==   1){
-			if(SaltMD5Utils.verifySaltPassword(password,userEntities.getFirst().getPassword())){
+			if(SaltMD5Utils.verifySaltPassword(userVO.getPassword(),userEntities.getFirst().getPassword())){
 				UserDTO copy = BeanUtil.copy(userEntities.getFirst(), UserDTO.class);
 				StpUtil.login(userEntities.getFirst().getId());
 				String tokenValue = StpUtil.getTokenValue();
@@ -87,5 +84,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,UserEntity> implemen
 		}
 		return BeanUtil.copy(userEntity,UserDTO.class);
 	}
+
 
 }

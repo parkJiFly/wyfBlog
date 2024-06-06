@@ -15,15 +15,13 @@ public interface IUserService extends IService<UserEntity> {
 
 	/**
 	 * 登录
-	 * @param userName
-	 * @param password
-	 * @param type
 	 * @return
 	 */
-	UserDTO login(String userName,String password,String type);
+	UserDTO login(UserVO userVO);
 
 	UserDTO addUser(UserVO userVO);
 
 	UserDTO detail(Long id);
+
 
 }
