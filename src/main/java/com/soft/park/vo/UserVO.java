@@ -16,4 +16,10 @@ public class UserVO extends UserEntity {
 
 	//版本类型
 	private String type;
+
+	//验证码校验Key
+	private String verKey;
+
+	//验证码校验Code
+	private String verCode;
 }
