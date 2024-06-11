@@ -56,4 +56,11 @@ public interface IRegionsService extends IService<RegionsEntity> {
      */
     boolean deleteById(String regionId);
 
+    /**
+     * 省市区树查询
+     * @param regionsVO
+     * @return
+     */
+    RegionsDTO queryList(RegionsVO regionsVO);
+
 }

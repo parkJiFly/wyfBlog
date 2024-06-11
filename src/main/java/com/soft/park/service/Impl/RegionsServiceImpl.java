@@ -93,4 +93,14 @@ public class RegionsServiceImpl extends ServiceImpl<RegionsMapper, RegionsEntity
 		return this.regionsMapper.deleteById(regionId) > 0;
 	}
 
+	/**
+	 * 省市区树查询
+	 * @param regionsVO
+	 * @return
+	 */
+	@Override
+	public RegionsDTO queryList(RegionsVO regionsVO) {
+		return null;
+	}
+
 }
