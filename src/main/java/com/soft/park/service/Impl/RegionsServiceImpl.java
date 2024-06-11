@@ -32,12 +32,12 @@ public class RegionsServiceImpl extends ServiceImpl<RegionsMapper, RegionsEntity
 	/**
 	 * 通过ID查询单条数据
 	 *
-	 * @param regionId 主键
+	 * @param id 主键
 	 * @return 实例对象
 	 */
 	@Override
-	public RegionsDTO queryById(String regionId) {
-		RegionsEntity regionsEntity = this.regionsMapper.queryById(regionId);
+	public RegionsDTO queryById(String id) {
+		RegionsEntity regionsEntity = this.regionsMapper.queryById(id);
 		return BeanUtil.copy(regionsEntity, RegionsDTO.class);
 	}
 
@@ -79,18 +79,18 @@ public class RegionsServiceImpl extends ServiceImpl<RegionsMapper, RegionsEntity
 	public RegionsDTO update(RegionsVO regionsVO) {
 		RegionsEntity regionsEntity = BeanUtil.copy(regionsVO, RegionsEntity.class);
 		this.regionsMapper.update(regionsEntity);
-		return this.queryById(regionsVO.getRegionId());
+		return this.queryById(regionsVO.getId());
 	}
 
 	/**
 	 * 通过主键删除数据
 	 *
-	 * @param regionId 主键
+	 * @param id 主键
 	 * @return 是否成功
 	 */
 	@Override
-	public boolean deleteById(String regionId) {
-		return this.regionsMapper.deleteById(regionId) > 0;
+	public boolean deleteById(String id) {
+		return this.regionsMapper.deleteById(id) > 0;
 	}
 
 	/**

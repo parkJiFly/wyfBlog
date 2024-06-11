@@ -31,12 +31,12 @@ public class UniversitiesServiceImpl extends ServiceImpl<UniversitiesMapper,Univ
     /**
      * 通过ID查询单条数据
      *
-     * @param universityId 主键
+     * @param id 主键
      * @return 实例对象
      */
     @Override
-    public UniversitiesDTO queryById(Integer universityId) {
-        UniversitiesEntity universitiesEntity  = this.universitiesMapper.queryById(universityId);
+    public UniversitiesDTO queryById(Integer id) {
+        UniversitiesEntity universitiesEntity  = this.universitiesMapper.queryById(id);
 		return BeanUtil.copy(universitiesEntity, UniversitiesDTO.class);
     }
 
@@ -78,17 +78,17 @@ public class UniversitiesServiceImpl extends ServiceImpl<UniversitiesMapper,Univ
     public UniversitiesDTO update(UniversitiesVO universitiesVO) {  
         UniversitiesEntity universitiesEntity = BeanUtil.copy(universitiesVO, UniversitiesEntity.class);
         this.universitiesMapper.update(universitiesEntity);
-        return this.queryById(universitiesVO.getUniversityId());
+        return this.queryById(universitiesVO.getId());
     }
 
     /**
      * 通过主键删除数据
      *
-     * @param universityId 主键
+     * @param id 主键
      * @return 是否成功
      */
     @Override
-    public boolean deleteById(Integer universityId) {
-        return this.universitiesMapper.deleteById(universityId) > 0;
+    public boolean deleteById(Integer id) {
+        return this.universitiesMapper.deleteById(id) > 0;
     }
 }

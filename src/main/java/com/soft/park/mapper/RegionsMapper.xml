@@ -3,7 +3,7 @@
 <mapper namespace="com.soft.park.mapper.RegionsMapper">
 
 	<resultMap type="com.soft.park.entity.Regions" id="RegionsMap">
-		<result property="regionId" column="region_id" jdbcType="VARCHAR"/>
+		<result property="id" column="id" jdbcType="VARCHAR"/>
 		<result property="regionName" column="region_name" jdbcType="VARCHAR"/>
 		<result property="parentId" column="parent_id" jdbcType="VARCHAR"/>
 		<result property="level" column="level" jdbcType="VARCHAR"/>
@@ -11,22 +11,22 @@
 
 	<!--查询单个-->
 	<select id="queryById" resultMap="RegionsMap">
-		select region_id,
+		select id,
 		       region_name,
 		       parent_id,
 		       level
 		from regions
-		where region_id = #{regionId}
+		where id = #{id}
 	</select>
 
 	<!--查询指定行数据-->
 	<select id="queryAllByLimit" resultMap="RegionsMap">
 		select
-		region_id, region_name, parent_id, level
+		id, region_name, parent_id, level
 		from regions
 		<where>
-			<if test="regionId != null and regionId != ''">
-				and region_id = #{regionId}
+			<if test="id != null and id != ''">
+				and id = #{id}
 			</if>
 			<if test="regionName != null and regionName != ''">
 				and region_name = #{regionName}
@@ -46,8 +46,8 @@
 		select count(1)
 		from regions
 		<where>
-			<if test="regionId != null and regionId != ''">
-				and region_id = #{regionId}
+			<if test="id != null and id != ''">
+				and id = #{id}
 			</if>
 			<if test="regionName != null and regionName != ''">
 				and region_name = #{regionName}
@@ -62,12 +62,12 @@
 	</select>
 
 	<!--新增所有列-->
-	<insert id="insert" keyProperty="regionId" useGeneratedKeys="true">
+	<insert id="insert" keyProperty="id" useGeneratedKeys="true">
 		insert into regions(region_name, parent_id, level)
 		values (#{regionName}, #{parentId}, #{level})
 	</insert>
 
-	<insert id="insertBatch" keyProperty="regionId" useGeneratedKeys="true">
+	<insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
 		insert into regions(region_name, parent_id, level)
 		values
 		<foreach collection="entities" item="entity" separator=",">
@@ -75,7 +75,7 @@
 		</foreach>
 	</insert>
 
-	<insert id="insertOrUpdateBatch" keyProperty="regionId" useGeneratedKeys="true">
+	<insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
 		insert into regions(region_name, parent_id, level)
 		values
 		<foreach collection="entities" item="entity" separator=",">
@@ -101,14 +101,14 @@
 				level = #{level},
 			</if>
 		</set>
-		where region_id = #{regionId}
+		where id = #{id}
 	</update>
 
 	<!--通过主键删除-->
 	<delete id="deleteById">
 		delete
 		from regions
-		where region_id = #{regionId}
+		where id = #{id}
 	</delete>
 
 </mapper>

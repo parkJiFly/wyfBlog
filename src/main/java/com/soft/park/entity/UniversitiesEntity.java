@@ -21,8 +21,8 @@ public class UniversitiesEntity implements Serializable {
 	/**
 	 * 大学ID
 	 */
-	@TableField("university_id")
-	private Integer universityId;
+	@TableField("id")
+	private Integer id;
 
 	/**
 	 * 大学名称
