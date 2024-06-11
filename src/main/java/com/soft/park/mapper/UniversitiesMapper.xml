@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soft.park.mapper.UniversitiesMapper">
+
+	<resultMap type="com.soft.park.entity.Universities" id="UniversitiesMap">
+		<result property="universityId" column="university_id" jdbcType="INTEGER"/>
+		<result property="universityName" column="university_name" jdbcType="VARCHAR"/>
+		<result property="province" column="province" jdbcType="VARCHAR"/>
+		<result property="city" column="city" jdbcType="VARCHAR"/>
+		<result property="district" column="district" jdbcType="VARCHAR"/>
+		<result property="location" column="location" jdbcType="VARCHAR"/>
+		<result property="ranking" column="ranking" jdbcType="INTEGER"/>
+		<result property="type" column="type" jdbcType="INTEGER"/>
+		<result property="level" column="level" jdbcType="INTEGER"/>
+	</resultMap>
+
+	<!--查询单个-->
+	<select id="queryById" resultMap="UniversitiesMap">
+		select university_id,
+		       university_name,
+		       province,
+		       city,
+		       district,
+		       location,
+		       ranking,
+		       type,
+		       level
+		from universities
+		where university_id = #{universityId}
+	</select>
+
+	<!--查询指定行数据-->
+	<select id="queryAllByLimit" resultMap="UniversitiesMap">
+		select
+		university_id, university_name, province, city, district, location, ranking, type, level
+		from universities
+		<where>
+			<if test="universityId != null">
+				and university_id = #{universityId}
+			</if>
+			<if test="universityName != null and universityName != ''">
+				and university_name = #{universityName}
+			</if>
+			<if test="province != null and province != ''">
+				and province = #{province}
+			</if>
+			<if test="city != null and city != ''">
+				and city = #{city}
+			</if>
+			<if test="district != null and district != ''">
+				and district = #{district}
+			</if>
+			<if test="location != null and location != ''">
+				and location = #{location}
+			</if>
+			<if test="ranking != null">
+				and ranking = #{ranking}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="level != null">
+				and level = #{level}
+			</if>
+		</where>
+		limit #{pageable.offset}, #{pageable.pageSize}
+	</select>
+
+	<!--统计总行数-->
+	<select id="count" resultType="java.lang.Long">
+		select count(1)
+		from universities
+		<where>
+			<if test="universityId != null">
+				and university_id = #{universityId}
+			</if>
+			<if test="universityName != null and universityName != ''">
+				and university_name = #{universityName}
+			</if>
+			<if test="province != null and province != ''">
+				and province = #{province}
+			</if>
+			<if test="city != null and city != ''">
+				and city = #{city}
+			</if>
+			<if test="district != null and district != ''">
+				and district = #{district}
+			</if>
+			<if test="location != null and location != ''">
+				and location = #{location}
+			</if>
+			<if test="ranking != null">
+				and ranking = #{ranking}
+			</if>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="level != null">
+				and level = #{level}
+			</if>
+		</where>
+	</select>
+
+	<!--新增所有列-->
+	<insert id="insert" keyProperty="universityId" useGeneratedKeys="true">
+		insert into universities(university_name, province, city, district, location, ranking, type, level)
+		values (#{universityName}, #{province}, #{city}, #{district}, #{location}, #{ranking}, #{type}, #{level})
+	</insert>
+
+	<insert id="insertBatch" keyProperty="universityId" useGeneratedKeys="true">
+		insert into universities(university_name, province, city, district, location, ranking, type, level)
+		values
+		<foreach collection="entities" item="entity" separator=",">
+			(#{entity.universityName}, #{entity.province}, #{entity.city}, #{entity.district}, #{entity.location},
+			#{entity.ranking}, #{entity.type}, #{entity.level})
+		</foreach>
+	</insert>
+
+	<insert id="insertOrUpdateBatch" keyProperty="universityId" useGeneratedKeys="true">
+		insert into universities(university_name, province, city, district, location, ranking, type, level)
+		values
+		<foreach collection="entities" item="entity" separator=",">
+			(#{entity.universityName}, #{entity.province}, #{entity.city}, #{entity.district}, #{entity.location},
+			#{entity.ranking}, #{entity.type}, #{entity.level})
+		</foreach>
+		on duplicate key update
+		university_name = values(university_name),
+		province = values(province),
+		city = values(city),
+		district = values(district),
+		location = values(location),
+		ranking = values(ranking),
+		type = values(type),
+		level = values(level)
+	</insert>
+
+	<!--通过主键修改数据-->
+	<update id="update">
+		update universities
+		<set>
+			<if test="universityName != null and universityName != ''">
+				university_name = #{universityName},
+			</if>
+			<if test="province != null and province != ''">
+				province = #{province},
+			</if>
+			<if test="city != null and city != ''">
+				city = #{city},
+			</if>
+			<if test="district != null and district != ''">
+				district = #{district},
+			</if>
+			<if test="location != null and location != ''">
+				location = #{location},
+			</if>
+			<if test="ranking != null">
+				ranking = #{ranking},
+			</if>
+			<if test="type != null">
+				type = #{type},
+			</if>
+			<if test="level != null">
+				level = #{level},
+			</if>
+		</set>
+		where university_id = #{universityId}
+	</update>
+
+	<!--通过主键删除-->
+	<delete id="deleteById">
+		delete
+		from universities
+		where university_id = #{universityId}
+	</delete>
+
+</mapper>
+

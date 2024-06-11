@@ -15,16 +15,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @version 1.0
@@ -47,7 +42,7 @@ public class LoginController {
 	 */
 	@PostMapping("/login")
 	@Operation(summary = "登录操作")
-	public Result<UserDTO> login(UserVO userVO) {
+	public Result<UserDTO> login(@RequestBody  UserVO userVO) {
 		return Result.success(iUserService.login(userVO));
 
 	}
@@ -90,6 +85,20 @@ public class LoginController {
 		String key = RedisUtils.get().keyBuilder("verification", s);
 		RedisUtils.get().delete(key);
 		RedisUtils.get().set(key,code);
+		//设置过期时间为一分钟
+		// 获取当前时间
+		Date currentDate = new Date();
+
+		// 创建一个 Calendar 实例并设置为当前时间
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(currentDate);
+
+		// 增加一分钟
+		calendar.add(Calendar.MINUTE, 20);
+
+		// 获取增加一分钟后的 Date 对象
+		Date dateAfterOneMinute = calendar.getTime();
+		RedisUtils.get().expireAt(key,dateAfterOneMinute);
 
 		// 将GIF写入ByteArrayOutputStream
 		ByteArrayOutputStream gifOutputStream = new ByteArrayOutputStream();
