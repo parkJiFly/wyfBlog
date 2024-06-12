@@ -6,6 +6,7 @@ import com.soft.park.entity.RegionsEntity;
 import com.soft.park.mapper.RegionsMapper;
 import com.soft.park.service.IRegionsService;
 import com.soft.park.utils.BeanUtil;
+import com.soft.park.utils.TreeUtils;
 import com.soft.park.vo.RegionsVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,8 +100,11 @@ public class RegionsServiceImpl extends ServiceImpl<RegionsMapper, RegionsEntity
 	 * @return
 	 */
 	@Override
-	public RegionsDTO queryList(RegionsVO regionsVO) {
-		return null;
+	public List<RegionsDTO> queryList(RegionsVO regionsVO) {
+		List<RegionsEntity> list = this.list();
+		List<RegionsDTO> regionsDTOS = BeanUtil.copyToList(list, RegionsDTO.class);
+		List<RegionsDTO> dtos = TreeUtils.buildTree(regionsDTOS);
+		return dtos;
 	}
 
 }

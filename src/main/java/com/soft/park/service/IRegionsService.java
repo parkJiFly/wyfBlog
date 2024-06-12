@@ -7,6 +7,8 @@ import com.soft.park.vo.RegionsVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.List;
+
 /**
  * @version 1.0
  * @Author  WenYaFei
@@ -61,6 +63,6 @@ public interface IRegionsService extends IService<RegionsEntity> {
      * @param regionsVO
      * @return
      */
-    RegionsDTO queryList(RegionsVO regionsVO);
+    List<RegionsDTO> queryList(RegionsVO regionsVO);
 
 }

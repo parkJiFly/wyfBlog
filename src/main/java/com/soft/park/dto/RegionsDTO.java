@@ -20,26 +20,21 @@ public class RegionsDTO extends RegionsEntity implements TreeObject<String> {
 	/**
 	 * 子节点
 	 */
-	private List<RegionsDTO> regionsDTOList;
+	private List<RegionsDTO> children;
 
 	@Override
 	public String id() {
-		return null;
+		return this.getId();
 	}
 
 	@Override
 	public String parentId() {
-		return null;
+		return this.getParentId();
 	}
 
 	@Override
 	public void setChildren(List list) {
-
-	}
-
-	@Override
-	public List getChildren() {
-		return null;
+		this.children = list;
 	}
 
 }
