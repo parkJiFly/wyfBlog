@@ -4,6 +4,8 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.GifCaptcha;
 import cn.hutool.captcha.generator.RandomGenerator;
+import cn.sticki.validator.spel.SpelValid;
+import com.soft.park.config.ValidGroup;
 import com.soft.park.dto.UserDTO;
 import com.soft.park.result.Result;
 import com.soft.park.service.IUserService;
@@ -42,9 +44,8 @@ public class LoginController {
 	 */
 	@PostMapping("/login")
 	@Operation(summary = "登录操作")
-	public Result<UserDTO> login(@RequestBody  UserVO userVO) {
+	public Result<UserDTO> login(@SpelValid(payload = {ValidGroup.Login.class}) @RequestBody UserVO userVO) {
 		return Result.success(iUserService.login(userVO));
-
 	}
 
 	/**
@@ -93,7 +94,7 @@ public class LoginController {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(currentDate);
 
-		// 增加一分钟
+		// 增加20分钟
 		calendar.add(Calendar.MINUTE, 20);
 
 		// 获取增加一分钟后的 Date 对象
