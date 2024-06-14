@@ -21,8 +21,8 @@ public class RegionsEntity implements Serializable {
 	/**
 	 * 区域ID
 	 */
-	@TableField("region_id")
-	private String regionId;
+	@TableField("id")
+	private String id;
 
 	/**
 	 * 区域名称

@@ -27,7 +27,7 @@
 		<fastjson.version>1.2.78</fastjson.version>
 		<commons-lang3.version>3.7</commons-lang3.version>
 		<hutool.version>5.7.16</hutool.version>
-		<validator.version>6.0.17.Final</validator.version>
+		<validator.version>7.0.2.Final</validator.version>
 		<spring.boot.version>2.7.5</spring.boot.version>
 		<druid.version>1.0.28</druid.version>
 		<spring.boot.version>2.7.7</spring.boot.version>
@@ -146,6 +146,21 @@
 			<artifactId>hutool-captcha</artifactId>
 			<version>5.8.6</version>
 		</dependency>
+
+		<!-- 阿杆的注解校验 -->
+		<dependency>
+			<groupId>cn.sticki</groupId>
+			<artifactId>spel-validator</artifactId>
+			<version>0.1.0-beta</version>
+		</dependency>
+
+		<!--校验组件-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
+		<!--web组件-->
 	</dependencies>
 
 	<build>

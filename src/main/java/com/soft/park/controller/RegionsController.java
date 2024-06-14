@@ -35,6 +35,17 @@ public class RegionsController {
     }
 
     /**
+     * 树查询
+     *
+     * @param regionsVO 筛选条件
+     * @return 查询结果
+     */
+    @GetMapping("list")
+    public Result queryList(RegionsVO regionsVO) {
+        return Result.success(this.iRegionsService.queryList(regionsVO));
+    }
+
+    /**
      * 通过主键查询单条数据
      *
      * @param id 主键

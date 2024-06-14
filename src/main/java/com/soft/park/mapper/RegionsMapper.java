@@ -20,10 +20,10 @@ public interface RegionsMapper extends BaseMapper<RegionsEntity> {
 	/**
 	 * 通过ID查询单条数据
 	 *
-	 * @param regionId 主键
+	 * @param id 主键
 	 * @return 实例对象
 	 */
-	RegionsEntity queryById(String regionId);
+	RegionsEntity queryById(String id);
 
 	/**
 	 * 查询指定行数据
@@ -78,10 +78,10 @@ public interface RegionsMapper extends BaseMapper<RegionsEntity> {
 	/**
 	 * 通过主键删除数据
 	 *
-	 * @param regionId 主键
+	 * @param id 主键
 	 * @return 影响行数
 	 */
-	int deleteById(String regionId);
+	int deleteById(String id);
 
 }
 

@@ -3,7 +3,7 @@
 <mapper namespace="com.soft.park.mapper.UniversitiesMapper">
 
 	<resultMap type="com.soft.park.entity.Universities" id="UniversitiesMap">
-		<result property="universityId" column="university_id" jdbcType="INTEGER"/>
+		<result property="id" column="id" jdbcType="INTEGER"/>
 		<result property="universityName" column="university_name" jdbcType="VARCHAR"/>
 		<result property="province" column="province" jdbcType="VARCHAR"/>
 		<result property="city" column="city" jdbcType="VARCHAR"/>
@@ -16,7 +16,7 @@
 
 	<!--查询单个-->
 	<select id="queryById" resultMap="UniversitiesMap">
-		select university_id,
+		select id,
 		       university_name,
 		       province,
 		       city,
@@ -26,17 +26,17 @@
 		       type,
 		       level
 		from universities
-		where university_id = #{universityId}
+		where id = #{id}
 	</select>
 
 	<!--查询指定行数据-->
 	<select id="queryAllByLimit" resultMap="UniversitiesMap">
 		select
-		university_id, university_name, province, city, district, location, ranking, type, level
+		id, university_name, province, city, district, location, ranking, type, level
 		from universities
 		<where>
-			<if test="universityId != null">
-				and university_id = #{universityId}
+			<if test="id != null">
+				and id = #{id}
 			</if>
 			<if test="universityName != null and universityName != ''">
 				and university_name = #{universityName}
@@ -71,8 +71,8 @@
 		select count(1)
 		from universities
 		<where>
-			<if test="universityId != null">
-				and university_id = #{universityId}
+			<if test="id != null">
+				and id = #{id}
 			</if>
 			<if test="universityName != null and universityName != ''">
 				and university_name = #{universityName}
@@ -102,12 +102,12 @@
 	</select>
 
 	<!--新增所有列-->
-	<insert id="insert" keyProperty="universityId" useGeneratedKeys="true">
+	<insert id="insert" keyProperty="id" useGeneratedKeys="true">
 		insert into universities(university_name, province, city, district, location, ranking, type, level)
 		values (#{universityName}, #{province}, #{city}, #{district}, #{location}, #{ranking}, #{type}, #{level})
 	</insert>
 
-	<insert id="insertBatch" keyProperty="universityId" useGeneratedKeys="true">
+	<insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
 		insert into universities(university_name, province, city, district, location, ranking, type, level)
 		values
 		<foreach collection="entities" item="entity" separator=",">
@@ -116,7 +116,7 @@
 		</foreach>
 	</insert>
 
-	<insert id="insertOrUpdateBatch" keyProperty="universityId" useGeneratedKeys="true">
+	<insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
 		insert into universities(university_name, province, city, district, location, ranking, type, level)
 		values
 		<foreach collection="entities" item="entity" separator=",">
@@ -163,14 +163,14 @@
 				level = #{level},
 			</if>
 		</set>
-		where university_id = #{universityId}
+		where id = #{id}
 	</update>
 
 	<!--通过主键删除-->
 	<delete id="deleteById">
 		delete
 		from universities
-		where university_id = #{universityId}
+		where id = #{id}
 	</delete>
 
 </mapper>

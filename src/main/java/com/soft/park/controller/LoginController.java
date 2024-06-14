@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.GifCaptcha;
 import cn.hutool.captcha.generator.RandomGenerator;
+import com.soft.park.config.ValidGroup;
 import com.soft.park.dto.UserDTO;
 import com.soft.park.result.Result;
 import com.soft.park.service.IUserService;
@@ -14,7 +15,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.AllArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayOutputStream;
@@ -28,7 +29,6 @@ import java.util.*;
  * @description
  */
 @RestController
-@AllArgsConstructor
 @Tag(name = "登录部分", description = "登录操作等")
 @RequestMapping("/login")
 public class LoginController {
@@ -42,9 +42,8 @@ public class LoginController {
 	 */
 	@PostMapping("/login")
 	@Operation(summary = "登录操作")
-	public Result<UserDTO> login(@RequestBody  UserVO userVO) {
+	public Result<UserDTO> login(@Validated({ValidGroup.Login.class}) @RequestBody UserVO userVO) {
 		return Result.success(iUserService.login(userVO));
-
 	}
 
 	/**
@@ -93,7 +92,7 @@ public class LoginController {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(currentDate);
 
-		// 增加一分钟
+		// 增加20分钟
 		calendar.add(Calendar.MINUTE, 20);
 
 		// 获取增加一分钟后的 Date 对象

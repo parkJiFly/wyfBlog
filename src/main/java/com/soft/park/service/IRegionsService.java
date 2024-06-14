@@ -7,6 +7,8 @@ import com.soft.park.vo.RegionsVO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.util.List;
+
 /**
  * @version 1.0
  * @Author  WenYaFei
@@ -18,10 +20,10 @@ public interface IRegionsService extends IService<RegionsEntity> {
     /**
      * 通过ID查询单条数据
      *
-     * @param regionId 主键
+     * @param id 主键
      * @return 实例对象
      */
-    RegionsDTO queryById(String regionId);
+    RegionsDTO queryById(String id);
 
     /**
      * 分页查询
@@ -51,9 +53,16 @@ public interface IRegionsService extends IService<RegionsEntity> {
     /**
      * 通过主键删除数据
      *
-     * @param regionId 主键
+     * @param id 主键
      * @return 是否成功
      */
-    boolean deleteById(String regionId);
+    boolean deleteById(String id);
+
+    /**
+     * 省市区树查询
+     * @param regionsVO
+     * @return
+     */
+    List<RegionsDTO> queryList(RegionsVO regionsVO);
 
 }
