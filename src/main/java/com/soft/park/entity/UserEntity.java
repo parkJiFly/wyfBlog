@@ -1,9 +1,9 @@
 package com.soft.park.entity;
 
-import cn.sticki.validator.spel.SpelValid;
-import cn.sticki.validator.spel.constrain.SpelNotEmpty;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.soft.park.config.ValidGroup;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -16,14 +16,13 @@ import java.time.LocalDateTime;
  */
 @Data
 @TableName("user")
-@SpelValid
 public class UserEntity {
 
 	@TableField("id")
 	private Long id;
 
 	@TableField("user_name")
-	@SpelNotEmpty(group = "ValidGroup.SaveOrUpdate.class",message = "添加修改时名称不得为空")
+	@NotBlank(groups = {ValidGroup.SaveOrUpdate.class},message = "添加修改时名称不得为空")
 	private String userName;
 
 	@TableField("school_code")

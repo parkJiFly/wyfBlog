@@ -1,7 +1,6 @@
 package com.soft.park.controller;
 
 import cn.hutool.core.util.ObjectUtil;
-import cn.sticki.validator.spel.SpelValid;
 import com.soft.park.config.ValidGroup;
 import com.soft.park.dto.UserDTO;
 import com.soft.park.result.Result;
@@ -11,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -35,7 +35,7 @@ public class UserController {
 	 */
 	@PostMapping("save-update")
 	@Operation(summary = "新增用户")
-	public Result saveOrUpdate(@SpelValid(payload = {ValidGroup.SaveOrUpdate.class}) @RequestBody UserVO userVO) {
+	public Result saveOrUpdate(@Validated({ValidGroup.SaveOrUpdate.class}) @RequestBody UserVO userVO) {
 		UserDTO userDTO = iUserService.addUser(userVO);
 		return Result.success(userDTO);
 	}
