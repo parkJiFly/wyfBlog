@@ -11,11 +11,75 @@
  Target Server Version : 80030
  File Encoding         : 65001
 
- Date: 11/06/2024 21:11:33
+ Date: 14/06/2024 17:55:23
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for departments
+-- ----------------------------
+DROP TABLE IF EXISTS `departments`;
+CREATE TABLE `departments`  (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '部门ID',
+  `department_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '部门名称',
+  `parent_id` bigint NULL DEFAULT NULL COMMENT '父部门ID',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `created_by` bigint NULL DEFAULT NULL COMMENT '创建者ID',
+  `updated_by` bigint NULL DEFAULT NULL COMMENT '修改者ID',
+  `is_deleted` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志',
+  `status` tinyint NULL DEFAULT 1 COMMENT '状态',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '部门表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of departments
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for field_permissions
+-- ----------------------------
+DROP TABLE IF EXISTS `field_permissions`;
+CREATE TABLE `field_permissions`  (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '字段权限ID',
+  `field_permission_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '字段权限名称',
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '描述',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `created_by` bigint NULL DEFAULT NULL COMMENT '创建者ID',
+  `updated_by` bigint NULL DEFAULT NULL COMMENT '修改者ID',
+  `is_deleted` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志',
+  `status` tinyint NULL DEFAULT 1 COMMENT '状态',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '字段权限表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of field_permissions
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for menus
+-- ----------------------------
+DROP TABLE IF EXISTS `menus`;
+CREATE TABLE `menus`  (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
+  `menu_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '菜单名称',
+  `parent_id` bigint NULL DEFAULT NULL COMMENT '父菜单ID',
+  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '路径',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `created_by` bigint NULL DEFAULT NULL COMMENT '创建者ID',
+  `updated_by` bigint NULL DEFAULT NULL COMMENT '修改者ID',
+  `is_deleted` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志',
+  `status` tinyint NULL DEFAULT 1 COMMENT '状态',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of menus
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for regions
@@ -3398,6 +3462,63 @@ INSERT INTO `regions` VALUES ('659010000000', '胡杨河市', '659000000000', '2
 INSERT INTO `regions` VALUES ('86', '中国', '0', '0');
 
 -- ----------------------------
+-- Table structure for role_field_permissions
+-- ----------------------------
+DROP TABLE IF EXISTS `role_field_permissions`;
+CREATE TABLE `role_field_permissions`  (
+  `role_id` bigint NOT NULL COMMENT '角色ID',
+  `field_permission_id` bigint NOT NULL COMMENT '字段权限ID',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `created_by` bigint NULL DEFAULT NULL COMMENT '创建者ID',
+  `is_deleted` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志',
+  `status` tinyint NULL DEFAULT 1 COMMENT '状态',
+  PRIMARY KEY (`role_id`, `field_permission_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色字段权限关联表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of role_field_permissions
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for role_menus
+-- ----------------------------
+DROP TABLE IF EXISTS `role_menus`;
+CREATE TABLE `role_menus`  (
+  `role_id` bigint NOT NULL COMMENT '角色ID',
+  `menu_id` bigint NOT NULL COMMENT '菜单ID',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `created_by` bigint NULL DEFAULT NULL COMMENT '创建者ID',
+  `is_deleted` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志',
+  `status` tinyint NULL DEFAULT 1 COMMENT '状态',
+  PRIMARY KEY (`role_id`, `menu_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色菜单关联表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of role_menus
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for roles
+-- ----------------------------
+DROP TABLE IF EXISTS `roles`;
+CREATE TABLE `roles`  (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '角色ID',
+  `role_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '角色名称',
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '描述',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `created_by` bigint NULL DEFAULT NULL COMMENT '创建者ID',
+  `updated_by` bigint NULL DEFAULT NULL COMMENT '修改者ID',
+  `is_deleted` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志',
+  `status` tinyint NULL DEFAULT 1 COMMENT '状态',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of roles
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for universities
 -- ----------------------------
 DROP TABLE IF EXISTS `universities`;
@@ -3433,11 +3554,49 @@ CREATE TABLE `user`  (
   `password` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_mysql500_ci NULL DEFAULT NULL COMMENT '密码',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `username`(`user_name` ASC, `deleted` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1797905067068633090 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_mysql500_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1797905067068633091 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_mysql500_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
 INSERT INTO `user` VALUES (1797905067068633090, 'wenYaFei', 0, '朴智糖', NULL, '2024-06-05 17:21:22', 0, 'a6dd1db1290aa4999065dd60265149e9611cb7450a071775');
+INSERT INTO `user` VALUES (1801539472291057666, 'maYawen', 0, '朴阿龙', NULL, '2024-06-14 16:57:36', 0, '321f83f05c0b05fa6d66666941d14a32639cd3361bb09285');
+INSERT INTO `user` VALUES (1801539540133924865, '', 0, '朴阿11', NULL, '2024-06-14 16:57:52', 0, '763253b6d35e993880d5d440898c6ab7b61407b11e66d495');
+
+-- ----------------------------
+-- Table structure for user_departments
+-- ----------------------------
+DROP TABLE IF EXISTS `user_departments`;
+CREATE TABLE `user_departments`  (
+  `user_id` bigint NOT NULL COMMENT '用户ID',
+  `department_id` bigint NOT NULL COMMENT '部门ID',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `created_by` bigint NULL DEFAULT NULL COMMENT '创建者ID',
+  `is_deleted` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志',
+  `status` tinyint NULL DEFAULT 1 COMMENT '状态',
+  PRIMARY KEY (`user_id`, `department_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户部门关联表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user_departments
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for user_roles
+-- ----------------------------
+DROP TABLE IF EXISTS `user_roles`;
+CREATE TABLE `user_roles`  (
+  `user_id` bigint NOT NULL COMMENT '用户ID',
+  `role_id` bigint NOT NULL COMMENT '角色ID',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `created_by` bigint NULL DEFAULT NULL COMMENT '创建者ID',
+  `is_deleted` tinyint(1) NULL DEFAULT 0 COMMENT '删除标志',
+  `status` tinyint NULL DEFAULT 1 COMMENT '状态',
+  PRIMARY KEY (`user_id`, `role_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户角色关联表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user_roles
+-- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;
