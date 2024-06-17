@@ -1,8 +1,8 @@
 package com.soft.park.controller;
 
 import com.soft.park.result.Result;
-import com.soft.park.service.IUserService;
-import com.soft.park.vo.UserVO;
+import com.soft.park.service.ISkillService;
+import com.soft.park.vo.SkillVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
@@ -10,29 +10,29 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:21
- * @description (User)控制层
+ * @date 2024-06-17 19:40:20
+ * @description 技术能力情况表(Skill)控制层
  */
 @RestController
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/skill")
+public class SkillController {
 
 	/**
 	 * 服务对象
 	 */
 	@Autowired
-	private IUserService iUserService;
+	private ISkillService iSkillService;
 
 	/**
 	 * 分页查询
 	 *
-	 * @param userVO      筛选条件
+	 * @param skillVO     筛选条件
 	 * @param pageRequest 分页对象
 	 * @return 查询结果
 	 */
 	@GetMapping("list-page")
-	public Result queryByPage(UserVO userVO, PageRequest pageRequest) {
-		return Result.success(this.iUserService.queryByPage(userVO, pageRequest));
+	public Result queryByPage(SkillVO skillVO, PageRequest pageRequest) {
+		return Result.success(this.iSkillService.queryByPage(skillVO, pageRequest));
 	}
 
 	/**
@@ -42,30 +42,30 @@ public class UserController {
 	 * @return 单条数据
 	 */
 	@GetMapping("/detail")
-	public Result queryById(@RequestParam("id") Object id) {
-		return Result.success(this.iUserService.queryById(id));
+	public Result queryById(@RequestParam("id") Long id) {
+		return Result.success(this.iSkillService.queryById(id));
 	}
 
 	/**
 	 * 新增数据
 	 *
-	 * @param userVO 实体
+	 * @param skillVO 实体
 	 * @return 新增结果
 	 */
 	@PostMapping("/add")
-	public Result add(@RequestBody UserVO userVO) {
-		return Result.success(this.iUserService.insert(userVO));
+	public Result add(@RequestBody SkillVO skillVO) {
+		return Result.success(this.iSkillService.insert(skillVO));
 	}
 
 	/**
 	 * 编辑数据
 	 *
-	 * @param userVO 实体
+	 * @param skillVO 实体
 	 * @return 编辑结果
 	 */
 	@PostMapping("/update")
-	public Result update(@RequestBody UserVO userVO) {
-		return Result.success(this.iUserService.update(userVO));
+	public Result update(@RequestBody SkillVO skillVO) {
+		return Result.success(this.iSkillService.update(skillVO));
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class UserController {
 	 */
 	@GetMapping("/delete")
 	public Result deleteById(Long id) {
-		return Result.success(this.iUserService.deleteById(id));
+		return Result.success(this.iSkillService.deleteById(id));
 	}
 
 }
