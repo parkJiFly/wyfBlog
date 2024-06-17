@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soft.park.mapper.ProjectExperienceMapper">
+
+	<resultMap type="com.soft.park.entity.ProjectExperience" id="ProjectExperienceMap">
+		<result property="id" column="id" jdbcType="INTEGER"/>
+		<result property="toolId" column="tool_id" jdbcType="INTEGER"/>
+		<result property="projectName" column="project_name" jdbcType="VARCHAR"/>
+		<result property="projectDesc" column="project_desc" jdbcType="VARCHAR"/>
+		<result property="userId" column="user_id" jdbcType="INTEGER"/>
+		<result property="remark" column="remark" jdbcType="VARCHAR"/>
+		<result property="isDelete" column="is_delete" jdbcType="INTEGER"/>
+		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+		<result property="creator" column="creator" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+		<result property="updator" column="updator" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<!--查询单个-->
+	<select id="queryById" resultMap="ProjectExperienceMap">
+		select id,
+		       tool_id,
+		       project_name,
+		       project_desc,
+		       user_id,
+		       remark,
+		       is_delete,
+		       create_time,
+		       creator,
+		       update_time,
+		       updator
+		from project_experience
+		where id = #{id}
+	</select>
+
+	<!--查询指定行数据-->
+	<select id="queryAllByLimit" resultMap="ProjectExperienceMap">
+		select
+		id, tool_id, project_name, project_desc, user_id, remark, is_delete, create_time, creator, update_time, updator
+		from project_experience
+		<where>
+			<if test="id != null">
+				and id = #{id}
+			</if>
+			<if test="toolId != null">
+				and tool_id = #{toolId}
+			</if>
+			<if test="projectName != null and projectName != ''">
+				and project_name = #{projectName}
+			</if>
+			<if test="projectDesc != null and projectDesc != ''">
+				and project_desc = #{projectDesc}
+			</if>
+			<if test="userId != null">
+				and user_id = #{userId}
+			</if>
+			<if test="remark != null and remark != ''">
+				and remark = #{remark}
+			</if>
+			<if test="isDelete != null">
+				and is_delete = #{isDelete}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="creator != null and creator != ''">
+				and creator = #{creator}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="updator != null and updator != ''">
+				and updator = #{updator}
+			</if>
+		</where>
+		limit #{pageable.offset}, #{pageable.pageSize}
+	</select>
+
+	<!--统计总行数-->
+	<select id="count" resultType="java.lang.Long">
+		select count(1)
+		from project_experience
+		<where>
+			<if test="id != null">
+				and id = #{id}
+			</if>
+			<if test="toolId != null">
+				and tool_id = #{toolId}
+			</if>
+			<if test="projectName != null and projectName != ''">
+				and project_name = #{projectName}
+			</if>
+			<if test="projectDesc != null and projectDesc != ''">
+				and project_desc = #{projectDesc}
+			</if>
+			<if test="userId != null">
+				and user_id = #{userId}
+			</if>
+			<if test="remark != null and remark != ''">
+				and remark = #{remark}
+			</if>
+			<if test="isDelete != null">
+				and is_delete = #{isDelete}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="creator != null and creator != ''">
+				and creator = #{creator}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="updator != null and updator != ''">
+				and updator = #{updator}
+			</if>
+		</where>
+	</select>
+
+	<!--新增所有列-->
+	<insert id="insert" keyProperty="id" useGeneratedKeys="true">
+		insert into project_experience(tool_id, project_name, project_desc, user_id, remark, is_delete, create_time,
+		                               creator, update_time, updator)
+		values (#{toolId}, #{projectName}, #{projectDesc}, #{userId}, #{remark}, #{isDelete}, #{createTime}, #{creator},
+		        #{updateTime}, #{updator})
+	</insert>
+
+	<insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+		insert into project_experience(tool_id, project_name, project_desc, user_id, remark, is_delete, create_time,
+		creator, update_time, updator)
+		values
+		<foreach collection="entities" item="entity" separator=",">
+			(#{entity.toolId}, #{entity.projectName}, #{entity.projectDesc}, #{entity.userId}, #{entity.remark},
+			#{entity.isDelete}, #{entity.createTime}, #{entity.creator}, #{entity.updateTime}, #{entity.updator})
+		</foreach>
+	</insert>
+
+	<insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+		insert into project_experience(tool_id, project_name, project_desc, user_id, remark, is_delete, create_time,
+		creator, update_time, updator)
+		values
+		<foreach collection="entities" item="entity" separator=",">
+			(#{entity.toolId}, #{entity.projectName}, #{entity.projectDesc}, #{entity.userId}, #{entity.remark},
+			#{entity.isDelete}, #{entity.createTime}, #{entity.creator}, #{entity.updateTime}, #{entity.updator})
+		</foreach>
+		on duplicate key update
+		tool_id = values(tool_id),
+		project_name = values(project_name),
+		project_desc = values(project_desc),
+		user_id = values(user_id),
+		remark = values(remark),
+		is_delete = values(is_delete),
+		create_time = values(create_time),
+		creator = values(creator),
+		update_time = values(update_time),
+		updator = values(updator)
+	</insert>
+
+	<!--通过主键修改数据-->
+	<update id="update">
+		update project_experience
+		<set>
+			<if test="toolId != null">
+				tool_id = #{toolId},
+			</if>
+			<if test="projectName != null and projectName != ''">
+				project_name = #{projectName},
+			</if>
+			<if test="projectDesc != null and projectDesc != ''">
+				project_desc = #{projectDesc},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId},
+			</if>
+			<if test="remark != null and remark != ''">
+				remark = #{remark},
+			</if>
+			<if test="isDelete != null">
+				is_delete = #{isDelete},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="creator != null and creator != ''">
+				creator = #{creator},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="updator != null and updator != ''">
+				updator = #{updator},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<!--通过主键删除-->
+	<delete id="deleteById">
+		delete
+		from project_experience
+		where id = #{id}
+	</delete>
+
+</mapper>
+

@@ -9,13 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024/5/31 11:31
- * @description
+ * @date 2024-06-17 19:40:22
+ * @description (User)VO类
  */
 @Data
 @Slf4j
 public class UserVO extends UserEntity {
-
 	//版本类型
 	private String type;
 
@@ -27,3 +26,4 @@ public class UserVO extends UserEntity {
 	@NotBlank(groups = {ValidGroup.Login.class},message = "登录时verCode不存在")
 	private String verCode;
 }
+

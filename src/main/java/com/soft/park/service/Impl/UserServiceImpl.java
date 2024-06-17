@@ -12,29 +12,94 @@ import com.soft.park.utils.BeanUtil;
 import com.soft.park.utils.RedisUtils;
 import com.soft.park.utils.SaltMD5Utils;
 import com.soft.park.vo.UserVO;
-import lombok.AllArgsConstructor;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024/5/31 11:40
- * @description
+ * @date 2024-06-17 19:40:22
+ * @description (User)表服务实现类
  */
 @Service
 @Slf4j
-@AllArgsConstructor
-public class UserServiceImpl extends ServiceImpl<UserMapper,UserEntity> implements IUserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> implements IUserService {
 
 	@Autowired
 	private UserMapper userMapper;
+
+	/**
+	 * 通过ID查询单条数据
+	 *
+	 * @param id 主键
+	 * @return 实例对象
+	 */
+	@Override
+	public UserDTO queryById(Object id) {
+		UserEntity userEntity = this.userMapper.queryById(id);
+		return BeanUtil.copy(userEntity, UserDTO.class);
+	}
+
+	/**
+	 * 分页查询
+	 *
+	 * @param userVO      筛选条件
+	 * @param pageRequest 分页对象
+	 * @return 查询结果
+	 */
+	@Override
+	public Page<UserDTO> queryByPage(UserVO userVO, PageRequest pageRequest) {
+		long total = this.userMapper.count(userVO);
+		List<UserEntity> userEntityS = this.userMapper.queryAllByLimit(userVO, pageRequest);
+		List<UserDTO> userDTOS = BeanUtil.copyToList(userEntityS, UserDTO.class);
+		return new PageImpl<>(userDTOS, pageRequest, total);
+	}
+
+	/**
+	 * 新增数据
+	 *
+	 * @param userVO 实例对象
+	 * @return 实例对象
+	 */
+	@Override
+	public UserDTO insert(@Valid @RequestBody UserVO userVO) {
+		UserEntity userEntity = BeanUtil.copy(userVO, UserEntity.class);
+		this.userMapper.insert(userEntity);
+		return BeanUtil.copy(userEntity, UserDTO.class);
+	}
+
+	/**
+	 * 修改数据
+	 *
+	 * @param userVO 实例对象
+	 * @return 实例对象
+	 */
+	@Override
+	public UserDTO update(UserVO userVO) {
+		UserEntity userEntity = BeanUtil.copy(userVO, UserEntity.class);
+		this.userMapper.update(userEntity);
+		return this.queryById(userVO.getId());
+	}
+
+	/**
+	 * 通过主键删除数据
+	 *
+	 * @param id 主键
+	 * @return 是否成功
+	 */
+	@Override
+	public boolean deleteById(Long id) {
+		return this.userMapper.deleteById(id) > 0;
+	}
 
 	/**
 	 * 进行登录功能
@@ -65,21 +130,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,UserEntity> implemen
 		return null;
 	}
 
-	/**
-	 * 新增用户
-	 * @param userVO
-	 * @return
-	 */
-	@Override
-	public UserDTO addUser(UserVO userVO) {
-		UserEntity userEntity = new UserEntity();
-		BeanUtils.copyProperties(userVO,userEntity);
-		userEntity.setPassword(SaltMD5Utils.generateSaltPassword(userVO.getPassword()));
-		LocalDateTime localDateTime = LocalDateTime.now();
-		userEntity.setRegisterTime(localDateTime);
-		super.saveOrUpdate(userEntity);
-		return BeanUtil.copy(userEntity,UserDTO.class);
-	}
 
 	/**
 	 * 查看用户详情
@@ -94,6 +144,5 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,UserEntity> implemen
 		}
 		return BeanUtil.copy(userEntity,UserDTO.class);
 	}
-
 
 }

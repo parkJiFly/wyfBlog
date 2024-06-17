@@ -2,4 +2,373 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.soft.park.mapper.UserMapper">
 
+	<resultMap type="com.soft.park.entity.User" id="UserMap">
+		<result property="id" column="id" jdbcType="VARCHAR"/>
+		<result property="userName" column="user_name" jdbcType="VARCHAR"/>
+		<result property="schoolCode" column="school_code" jdbcType="VARCHAR"/>
+		<result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+		<result property="avatarUrl" column="avatar_url" jdbcType="VARCHAR"/>
+		<result property="registerTime" column="register_time" jdbcType="TIMESTAMP"/>
+		<result property="deleted" column="deleted" jdbcType="VARCHAR"/>
+		<result property="password" column="password" jdbcType="VARCHAR"/>
+		<result property="birthTime" column="birth_time" jdbcType="TIMESTAMP"/>
+		<result property="sex" column="sex" jdbcType="INTEGER"/>
+		<result property="schoolName" column="school_name" jdbcType="VARCHAR"/>
+		<result property="educational" column="educational" jdbcType="INTEGER"/>
+		<result property="professionId" column="profession_id" jdbcType="INTEGER"/>
+		<result property="professionName" column="profession_name" jdbcType="VARCHAR"/>
+		<result property="graduateDate" column="graduate_date" jdbcType="TIMESTAMP"/>
+		<result property="companyId" column="company_id" jdbcType="INTEGER"/>
+		<result property="companyName" column="company_name" jdbcType="VARCHAR"/>
+		<result property="positionId" column="position_id" jdbcType="INTEGER"/>
+		<result property="positionName" column="position_name" jdbcType="VARCHAR"/>
+		<result property="remark" column="remark" jdbcType="VARCHAR"/>
+		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+		<result property="creator" column="creator" jdbcType="VARCHAR"/>
+		<result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+		<result property="updator" column="updator" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<!--查询单个-->
+	<select id="queryById" resultMap="UserMap">
+		select id,
+		       user_name,
+		       school_code,
+		       nickname,
+		       avatar_url,
+		       register_time,
+		       deleted,
+		       password,
+		       birth_time,
+		       sex,
+		       school_name,
+		       educational,
+		       profession_id,
+		       profession_name,
+		       graduate_date,
+		       company_id,
+		       company_name,
+		       position_id,
+		       position_name,
+		       remark,
+		       create_time,
+		       creator,
+		       update_time,
+		       updator
+		from user
+		where id = #{id}
+	</select>
+
+	<!--查询指定行数据-->
+	<select id="queryAllByLimit" resultMap="UserMap">
+		select
+		id, user_name, school_code, nickname, avatar_url, register_time, deleted, password, birth_time, sex,
+		school_name, educational, profession_id, profession_name, graduate_date, company_id, company_name, position_id,
+		position_name, remark, create_time, creator, update_time, updator
+		from user
+		<where>
+			<if test="id != null">
+				and id = #{id}
+			</if>
+			<if test="userName != null and userName != ''">
+				and user_name = #{userName}
+			</if>
+			<if test="schoolCode != null">
+				and school_code = #{schoolCode}
+			</if>
+			<if test="nickname != null and nickname != ''">
+				and nickname = #{nickname}
+			</if>
+			<if test="avatarUrl != null and avatarUrl != ''">
+				and avatar_url = #{avatarUrl}
+			</if>
+			<if test="registerTime != null">
+				and register_time = #{registerTime}
+			</if>
+			<if test="deleted != null">
+				and deleted = #{deleted}
+			</if>
+			<if test="password != null and password != ''">
+				and password = #{password}
+			</if>
+			<if test="birthTime != null">
+				and birth_time = #{birthTime}
+			</if>
+			<if test="sex != null">
+				and sex = #{sex}
+			</if>
+			<if test="schoolName != null and schoolName != ''">
+				and school_name = #{schoolName}
+			</if>
+			<if test="educational != null">
+				and educational = #{educational}
+			</if>
+			<if test="professionId != null">
+				and profession_id = #{professionId}
+			</if>
+			<if test="professionName != null and professionName != ''">
+				and profession_name = #{professionName}
+			</if>
+			<if test="graduateDate != null">
+				and graduate_date = #{graduateDate}
+			</if>
+			<if test="companyId != null">
+				and company_id = #{companyId}
+			</if>
+			<if test="companyName != null and companyName != ''">
+				and company_name = #{companyName}
+			</if>
+			<if test="positionId != null">
+				and position_id = #{positionId}
+			</if>
+			<if test="positionName != null and positionName != ''">
+				and position_name = #{positionName}
+			</if>
+			<if test="remark != null and remark != ''">
+				and remark = #{remark}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="creator != null and creator != ''">
+				and creator = #{creator}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="updator != null and updator != ''">
+				and updator = #{updator}
+			</if>
+		</where>
+		limit #{pageable.offset}, #{pageable.pageSize}
+	</select>
+
+	<!--统计总行数-->
+	<select id="count" resultType="java.lang.Long">
+		select count(1)
+		from user
+		<where>
+			<if test="id != null">
+				and id = #{id}
+			</if>
+			<if test="userName != null and userName != ''">
+				and user_name = #{userName}
+			</if>
+			<if test="schoolCode != null">
+				and school_code = #{schoolCode}
+			</if>
+			<if test="nickname != null and nickname != ''">
+				and nickname = #{nickname}
+			</if>
+			<if test="avatarUrl != null and avatarUrl != ''">
+				and avatar_url = #{avatarUrl}
+			</if>
+			<if test="registerTime != null">
+				and register_time = #{registerTime}
+			</if>
+			<if test="deleted != null">
+				and deleted = #{deleted}
+			</if>
+			<if test="password != null and password != ''">
+				and password = #{password}
+			</if>
+			<if test="birthTime != null">
+				and birth_time = #{birthTime}
+			</if>
+			<if test="sex != null">
+				and sex = #{sex}
+			</if>
+			<if test="schoolName != null and schoolName != ''">
+				and school_name = #{schoolName}
+			</if>
+			<if test="educational != null">
+				and educational = #{educational}
+			</if>
+			<if test="professionId != null">
+				and profession_id = #{professionId}
+			</if>
+			<if test="professionName != null and professionName != ''">
+				and profession_name = #{professionName}
+			</if>
+			<if test="graduateDate != null">
+				and graduate_date = #{graduateDate}
+			</if>
+			<if test="companyId != null">
+				and company_id = #{companyId}
+			</if>
+			<if test="companyName != null and companyName != ''">
+				and company_name = #{companyName}
+			</if>
+			<if test="positionId != null">
+				and position_id = #{positionId}
+			</if>
+			<if test="positionName != null and positionName != ''">
+				and position_name = #{positionName}
+			</if>
+			<if test="remark != null and remark != ''">
+				and remark = #{remark}
+			</if>
+			<if test="createTime != null">
+				and create_time = #{createTime}
+			</if>
+			<if test="creator != null and creator != ''">
+				and creator = #{creator}
+			</if>
+			<if test="updateTime != null">
+				and update_time = #{updateTime}
+			</if>
+			<if test="updator != null and updator != ''">
+				and updator = #{updator}
+			</if>
+		</where>
+	</select>
+
+	<!--新增所有列-->
+	<insert id="insert" keyProperty="id" useGeneratedKeys="true">
+		insert into user(user_name, school_code, nickname, avatar_url, register_time, deleted, password, birth_time,
+		                 sex, school_name, educational, profession_id, profession_name, graduate_date, company_id,
+		                 company_name, position_id, position_name, remark, create_time, creator, update_time, updator)
+		values (#{userName}, #{schoolCode}, #{nickname}, #{avatarUrl}, #{registerTime}, #{deleted}, #{password},
+		        #{birthTime}, #{sex}, #{schoolName}, #{educational}, #{professionId}, #{professionName},
+		        #{graduateDate}, #{companyId}, #{companyName}, #{positionId}, #{positionName}, #{remark}, #{createTime},
+		        #{creator}, #{updateTime}, #{updator})
+	</insert>
+
+	<insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+		insert into user(user_name, school_code, nickname, avatar_url, register_time, deleted, password, birth_time,
+		sex, school_name, educational, profession_id, profession_name, graduate_date, company_id, company_name,
+		position_id, position_name, remark, create_time, creator, update_time, updator)
+		values
+		<foreach collection="entities" item="entity" separator=",">
+			(#{entity.userName}, #{entity.schoolCode}, #{entity.nickname}, #{entity.avatarUrl}, #{entity.registerTime},
+			#{entity.deleted}, #{entity.password}, #{entity.birthTime}, #{entity.sex}, #{entity.schoolName},
+			#{entity.educational}, #{entity.professionId}, #{entity.professionName}, #{entity.graduateDate},
+			#{entity.companyId}, #{entity.companyName}, #{entity.positionId}, #{entity.positionName}, #{entity.remark},
+			#{entity.createTime}, #{entity.creator}, #{entity.updateTime}, #{entity.updator})
+		</foreach>
+	</insert>
+
+	<insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+		insert into user(user_name, school_code, nickname, avatar_url, register_time, deleted, password, birth_time,
+		sex, school_name, educational, profession_id, profession_name, graduate_date, company_id, company_name,
+		position_id, position_name, remark, create_time, creator, update_time, updator)
+		values
+		<foreach collection="entities" item="entity" separator=",">
+			(#{entity.userName}, #{entity.schoolCode}, #{entity.nickname}, #{entity.avatarUrl}, #{entity.registerTime},
+			#{entity.deleted}, #{entity.password}, #{entity.birthTime}, #{entity.sex}, #{entity.schoolName},
+			#{entity.educational}, #{entity.professionId}, #{entity.professionName}, #{entity.graduateDate},
+			#{entity.companyId}, #{entity.companyName}, #{entity.positionId}, #{entity.positionName}, #{entity.remark},
+			#{entity.createTime}, #{entity.creator}, #{entity.updateTime}, #{entity.updator})
+		</foreach>
+		on duplicate key update
+		user_name = values(user_name),
+		school_code = values(school_code),
+		nickname = values(nickname),
+		avatar_url = values(avatar_url),
+		register_time = values(register_time),
+		deleted = values(deleted),
+		password = values(password),
+		birth_time = values(birth_time),
+		sex = values(sex),
+		school_name = values(school_name),
+		educational = values(educational),
+		profession_id = values(profession_id),
+		profession_name = values(profession_name),
+		graduate_date = values(graduate_date),
+		company_id = values(company_id),
+		company_name = values(company_name),
+		position_id = values(position_id),
+		position_name = values(position_name),
+		remark = values(remark),
+		create_time = values(create_time),
+		creator = values(creator),
+		update_time = values(update_time),
+		updator = values(updator)
+	</insert>
+
+	<!--通过主键修改数据-->
+	<update id="update">
+		update user
+		<set>
+			<if test="userName != null and userName != ''">
+				user_name = #{userName},
+			</if>
+			<if test="schoolCode != null">
+				school_code = #{schoolCode},
+			</if>
+			<if test="nickname != null and nickname != ''">
+				nickname = #{nickname},
+			</if>
+			<if test="avatarUrl != null and avatarUrl != ''">
+				avatar_url = #{avatarUrl},
+			</if>
+			<if test="registerTime != null">
+				register_time = #{registerTime},
+			</if>
+			<if test="deleted != null">
+				deleted = #{deleted},
+			</if>
+			<if test="password != null and password != ''">
+				password = #{password},
+			</if>
+			<if test="birthTime != null">
+				birth_time = #{birthTime},
+			</if>
+			<if test="sex != null">
+				sex = #{sex},
+			</if>
+			<if test="schoolName != null and schoolName != ''">
+				school_name = #{schoolName},
+			</if>
+			<if test="educational != null">
+				educational = #{educational},
+			</if>
+			<if test="professionId != null">
+				profession_id = #{professionId},
+			</if>
+			<if test="professionName != null and professionName != ''">
+				profession_name = #{professionName},
+			</if>
+			<if test="graduateDate != null">
+				graduate_date = #{graduateDate},
+			</if>
+			<if test="companyId != null">
+				company_id = #{companyId},
+			</if>
+			<if test="companyName != null and companyName != ''">
+				company_name = #{companyName},
+			</if>
+			<if test="positionId != null">
+				position_id = #{positionId},
+			</if>
+			<if test="positionName != null and positionName != ''">
+				position_name = #{positionName},
+			</if>
+			<if test="remark != null and remark != ''">
+				remark = #{remark},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="creator != null and creator != ''">
+				creator = #{creator},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="updator != null and updator != ''">
+				updator = #{updator},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<!--通过主键删除-->
+	<delete id="deleteById">
+		delete
+		from user
+		where id = #{id}
+	</delete>
+
 </mapper>
+
