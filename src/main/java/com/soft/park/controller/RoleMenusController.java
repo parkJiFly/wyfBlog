@@ -1,16 +1,17 @@
 package com.soft.park.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.soft.park.dto.RoleMenusDTO;
 import com.soft.park.result.Result;
 import com.soft.park.service.IRoleMenusService;
 import com.soft.park.vo.RoleMenusVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-14 17:40:40
+ * @date 2024-06-18 17:45:46
  * @description 角色菜单关联表(RoleMenus)控制层
  */
 @RestController
@@ -27,12 +28,11 @@ public class RoleMenusController {
 	 * 分页查询
 	 *
 	 * @param roleMenusVO 筛选条件
-	 * @param pageRequest 分页对象
 	 * @return 查询结果
 	 */
-	@GetMapping("list-page")
-	public Result queryByPage(RoleMenusVO roleMenusVO, PageRequest pageRequest) {
-		return Result.success(this.iRoleMenusService.queryByPage(roleMenusVO, pageRequest));
+	@GetMapping("/list-page")
+	public Result<IPage<RoleMenusDTO>> queryByPage(RoleMenusVO roleMenusVO) {
+		return Result.success(this.iRoleMenusService.queryByPage(roleMenusVO));
 	}
 
 	/**

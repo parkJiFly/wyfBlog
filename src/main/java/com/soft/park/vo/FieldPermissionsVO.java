@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-14 17:44:11
+ * @date 2024-06-18 17:42:21
  * @description 字段权限表(FieldPermissions)VO类
  */
 @Data

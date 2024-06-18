@@ -3,14 +3,13 @@ package com.soft.park.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.soft.park.dto.ProfessionDTO;
 import com.soft.park.entity.ProfessionEntity;
+import com.soft.park.result.ResultPage;
 import com.soft.park.vo.ProfessionVO;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:15
+ * @date 2024-06-18 17:42:22
  * @description 专业表(Profession)表服务接口
  */
 public interface IProfessionService extends IService<ProfessionEntity> {
@@ -27,10 +26,9 @@ public interface IProfessionService extends IService<ProfessionEntity> {
 	 * 分页查询
 	 *
 	 * @param professionVO 筛选条件
-	 * @param pageRequest  分页对象
 	 * @return 查询结果
 	 */
-	Page<ProfessionDTO> queryByPage(ProfessionVO professionVO, PageRequest pageRequest);
+	ResultPage<ProfessionDTO> queryByPage(ProfessionVO professionVO);
 
 	/**
 	 * 新增数据

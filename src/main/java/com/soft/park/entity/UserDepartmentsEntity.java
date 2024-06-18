@@ -10,20 +10,13 @@ import java.util.Date;
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-14 17:40:42
+ * @date 2024-06-18 17:42:30
  * @description
  */
 @Data
 @TableName("user_departments")
-public class UserDepartmentsEntity implements Serializable {
+public class UserDepartmentsEntity extends BaseEntity implements Serializable {
 
-	private static final long serialVersionUID = -67932313130495818L;
-
-	/**
-	 * 用户ID
-	 */
-	@TableField("user_id")
-	private Long userId;
 
 	/**
 	 * 部门ID

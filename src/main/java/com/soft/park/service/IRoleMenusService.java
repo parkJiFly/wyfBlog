@@ -3,14 +3,13 @@ package com.soft.park.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.soft.park.dto.RoleMenusDTO;
 import com.soft.park.entity.RoleMenusEntity;
+import com.soft.park.result.ResultPage;
 import com.soft.park.vo.RoleMenusVO;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-14 17:40:41
+ * @date 2024-06-18 17:42:25
  * @description 角色菜单关联表(RoleMenus)表服务接口
  */
 public interface IRoleMenusService extends IService<RoleMenusEntity> {
@@ -27,10 +26,9 @@ public interface IRoleMenusService extends IService<RoleMenusEntity> {
 	 * 分页查询
 	 *
 	 * @param roleMenusVO 筛选条件
-	 * @param pageRequest 分页对象
 	 * @return 查询结果
 	 */
-	Page<RoleMenusDTO> queryByPage(RoleMenusVO roleMenusVO, PageRequest pageRequest);
+	ResultPage<RoleMenusDTO> queryByPage(RoleMenusVO roleMenusVO);
 
 	/**
 	 * 新增数据

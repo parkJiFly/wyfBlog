@@ -3,14 +3,13 @@ package com.soft.park.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.soft.park.dto.ProjectResumeRelationDTO;
 import com.soft.park.entity.ProjectResumeRelationEntity;
+import com.soft.park.result.ResultPage;
 import com.soft.park.vo.ProjectResumeRelationVO;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:19
+ * @date 2024-06-18 17:42:24
  * @description 项目简历关联表(ProjectResumeRelation)表服务接口
  */
 public interface IProjectResumeRelationService extends IService<ProjectResumeRelationEntity> {
@@ -27,10 +26,9 @@ public interface IProjectResumeRelationService extends IService<ProjectResumeRel
 	 * 分页查询
 	 *
 	 * @param projectResumeRelationVO 筛选条件
-	 * @param pageRequest             分页对象
 	 * @return 查询结果
 	 */
-	Page<ProjectResumeRelationDTO> queryByPage(ProjectResumeRelationVO projectResumeRelationVO, PageRequest pageRequest);
+	ResultPage<ProjectResumeRelationDTO> queryByPage(ProjectResumeRelationVO projectResumeRelationVO);
 
 	/**
 	 * 新增数据

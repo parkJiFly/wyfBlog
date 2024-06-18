@@ -3,14 +3,13 @@ package com.soft.park.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.soft.park.dto.FieldPermissionsDTO;
 import com.soft.park.entity.FieldPermissionsEntity;
+import com.soft.park.result.ResultPage;
 import com.soft.park.vo.FieldPermissionsVO;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-14 17:44:11
+ * @date 2024-06-18 17:42:20
  * @description 字段权限表(FieldPermissions)表服务接口
  */
 public interface IFieldPermissionsService extends IService<FieldPermissionsEntity> {
@@ -27,10 +26,9 @@ public interface IFieldPermissionsService extends IService<FieldPermissionsEntit
 	 * 分页查询
 	 *
 	 * @param fieldPermissionsVO 筛选条件
-	 * @param pageRequest        分页对象
 	 * @return 查询结果
 	 */
-	Page<FieldPermissionsDTO> queryByPage(FieldPermissionsVO fieldPermissionsVO, PageRequest pageRequest);
+	ResultPage<FieldPermissionsDTO> queryByPage(FieldPermissionsVO fieldPermissionsVO);
 
 	/**
 	 * 新增数据

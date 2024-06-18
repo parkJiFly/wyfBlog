@@ -1,25 +1,23 @@
 package com.soft.park.service.Impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.soft.park.dto.ProjectExperienceDTO;
 import com.soft.park.entity.ProjectExperienceEntity;
 import com.soft.park.mapper.ProjectExperienceMapper;
+import com.soft.park.result.ResultPage;
 import com.soft.park.service.IProjectExperienceService;
 import com.soft.park.utils.BeanUtil;
+import com.soft.park.utils.ToolUtil;
 import com.soft.park.vo.ProjectExperienceVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:17
+ * @date 2024-06-18 18:15:16
  * @description 项目经验情况表(ProjectExperience)表服务实现类
  */
 @Service
@@ -37,7 +35,7 @@ public class ProjectExperienceServiceImpl extends ServiceImpl<ProjectExperienceM
 	 */
 	@Override
 	public ProjectExperienceDTO queryById(Long id) {
-		ProjectExperienceEntity projectExperienceEntity = this.projectExperienceMapper.queryById(id);
+		ProjectExperienceEntity projectExperienceEntity = this.getById(id);
 		return BeanUtil.copy(projectExperienceEntity, ProjectExperienceDTO.class);
 	}
 
@@ -45,15 +43,15 @@ public class ProjectExperienceServiceImpl extends ServiceImpl<ProjectExperienceM
 	 * 分页查询
 	 *
 	 * @param projectExperienceVO 筛选条件
-	 * @param pageRequest         分页对象
 	 * @return 查询结果
 	 */
 	@Override
-	public Page<ProjectExperienceDTO> queryByPage(ProjectExperienceVO projectExperienceVO, PageRequest pageRequest) {
-		long total = this.projectExperienceMapper.count(projectExperienceVO);
-		List<ProjectExperienceEntity> projectExperienceEntityS = this.projectExperienceMapper.queryAllByLimit(projectExperienceVO, pageRequest);
-		List<ProjectExperienceDTO> projectExperienceDTOS = BeanUtil.copyToList(projectExperienceEntityS, ProjectExperienceDTO.class);
-		return new PageImpl<>(projectExperienceDTOS, pageRequest, total);
+	public ResultPage<ProjectExperienceDTO> queryByPage(ProjectExperienceVO projectExperienceVO) {
+		Page<ProjectExperienceEntity> Page = new Page<>(projectExperienceVO.getPageNo(), projectExperienceVO.getPageSize());
+		Page<ProjectExperienceEntity> entityPage = this.page(Page);
+
+		ResultPage<ProjectExperienceDTO> resultPage = ToolUtil.convertEntityPageToToPage(entityPage, ProjectExperienceDTO.class);
+		return resultPage;
 	}
 
 	/**
@@ -65,7 +63,7 @@ public class ProjectExperienceServiceImpl extends ServiceImpl<ProjectExperienceM
 	@Override
 	public ProjectExperienceDTO insert(ProjectExperienceVO projectExperienceVO) {
 		ProjectExperienceEntity projectExperienceEntity = BeanUtil.copy(projectExperienceVO, ProjectExperienceEntity.class);
-		this.projectExperienceMapper.insert(projectExperienceEntity);
+		super.saveOrUpdate(projectExperienceEntity);
 		return BeanUtil.copy(projectExperienceEntity, ProjectExperienceDTO.class);
 	}
 
@@ -78,8 +76,8 @@ public class ProjectExperienceServiceImpl extends ServiceImpl<ProjectExperienceM
 	@Override
 	public ProjectExperienceDTO update(ProjectExperienceVO projectExperienceVO) {
 		ProjectExperienceEntity projectExperienceEntity = BeanUtil.copy(projectExperienceVO, ProjectExperienceEntity.class);
-		this.projectExperienceMapper.update(projectExperienceEntity);
-		return this.queryById(projectExperienceVO.getId());
+		super.saveOrUpdate(projectExperienceEntity);
+		return BeanUtil.copy(projectExperienceEntity, ProjectExperienceDTO.class);
 	}
 
 	/**

@@ -1,16 +1,17 @@
 package com.soft.park.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.soft.park.dto.ProjectExperienceDTO;
 import com.soft.park.result.Result;
 import com.soft.park.service.IProjectExperienceService;
 import com.soft.park.vo.ProjectExperienceVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:16
+ * @date 2024-06-18 17:45:46
  * @description 项目经验情况表(ProjectExperience)控制层
  */
 @RestController
@@ -27,12 +28,11 @@ public class ProjectExperienceController {
 	 * 分页查询
 	 *
 	 * @param projectExperienceVO 筛选条件
-	 * @param pageRequest         分页对象
 	 * @return 查询结果
 	 */
-	@GetMapping("list-page")
-	public Result queryByPage(ProjectExperienceVO projectExperienceVO, PageRequest pageRequest) {
-		return Result.success(this.iProjectExperienceService.queryByPage(projectExperienceVO, pageRequest));
+	@GetMapping("/list-page")
+	public Result<IPage<ProjectExperienceDTO>> queryByPage(ProjectExperienceVO projectExperienceVO) {
+		return Result.success(this.iProjectExperienceService.queryByPage(projectExperienceVO));
 	}
 
 	/**

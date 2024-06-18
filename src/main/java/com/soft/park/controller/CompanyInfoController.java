@@ -1,16 +1,17 @@
 package com.soft.park.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.soft.park.dto.CompanyInfoDTO;
 import com.soft.park.result.Result;
 import com.soft.park.service.ICompanyInfoService;
 import com.soft.park.vo.CompanyInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:08
+ * @date 2024-06-18 17:45:45
  * @description 公司信息表(CompanyInfo)控制层
  */
 @RestController
@@ -27,12 +28,11 @@ public class CompanyInfoController {
 	 * 分页查询
 	 *
 	 * @param companyInfoVO 筛选条件
-	 * @param pageRequest   分页对象
 	 * @return 查询结果
 	 */
-	@GetMapping("list-page")
-	public Result queryByPage(CompanyInfoVO companyInfoVO, PageRequest pageRequest) {
-		return Result.success(this.iCompanyInfoService.queryByPage(companyInfoVO, pageRequest));
+	@GetMapping("/list-page")
+	public Result<IPage<CompanyInfoDTO>> queryByPage(CompanyInfoVO companyInfoVO) {
+		return Result.success(this.iCompanyInfoService.queryByPage(companyInfoVO));
 	}
 
 	/**

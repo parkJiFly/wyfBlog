@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:21
+ * @date 2024-06-18 17:42:30
  * @description 技术能力情况表(Skill)DTO类
  */
 @Data

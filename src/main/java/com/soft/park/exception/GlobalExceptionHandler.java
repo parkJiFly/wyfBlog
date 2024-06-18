@@ -44,9 +44,13 @@ public class GlobalExceptionHandler {
 	@ResponseBody
 	public Result ExceptionHandler(HttpServletRequest req, Exception e) {
 		log.error("发生异常！原因是：{}", e.toString());
-		if (e instanceof NotLoginException) {    // 如果是自定义返回异常
+		if (e instanceof NotLoginException) {    // 如果是登录返回异常
 			NotLoginException ee = (NotLoginException) e;
 			return Result.error(ee.getMessage());
+		}
+		if (e instanceof MethodArgumentNotValidException) {    // 注解异常校验
+			MethodArgumentNotValidException ee = (MethodArgumentNotValidException) e;
+			return Result.error(ee.getBindingResult().getAllErrors().getFirst().getDefaultMessage());
 		}
 		return Result.error(e.getMessage());
 	}

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:19
+ * @date 2024-06-18 17:42:24
  * @description 项目简历关联表(ProjectResumeRelation)mapper层
  */
 @Mapper

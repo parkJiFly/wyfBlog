@@ -3,14 +3,13 @@ package com.soft.park.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.soft.park.dto.UserRolesDTO;
 import com.soft.park.entity.UserRolesEntity;
+import com.soft.park.result.ResultPage;
 import com.soft.park.vo.UserRolesVO;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-14 17:40:44
+ * @date 2024-06-18 17:42:31
  * @description 用户角色关联表(UserRoles)表服务接口
  */
 public interface IUserRolesService extends IService<UserRolesEntity> {
@@ -27,10 +26,9 @@ public interface IUserRolesService extends IService<UserRolesEntity> {
 	 * 分页查询
 	 *
 	 * @param userRolesVO 筛选条件
-	 * @param pageRequest 分页对象
 	 * @return 查询结果
 	 */
-	Page<UserRolesDTO> queryByPage(UserRolesVO userRolesVO, PageRequest pageRequest);
+	ResultPage<UserRolesDTO> queryByPage(UserRolesVO userRolesVO);
 
 	/**
 	 * 新增数据

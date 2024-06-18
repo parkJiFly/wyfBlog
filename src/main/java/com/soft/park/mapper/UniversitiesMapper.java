@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-11 15:50:49
+ * @date 2024-06-18 17:42:30
  * @description 大学表(Universities)mapper层
  */
 @Mapper

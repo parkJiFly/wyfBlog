@@ -10,20 +10,12 @@ import java.util.Date;
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:16
+ * @date 2024-06-18 17:42:22
  * @description
  */
 @Data
 @TableName("project_experience")
-public class ProjectExperienceEntity implements Serializable {
-
-	private static final long serialVersionUID = 234746452881203470L;
-
-	/**
-	 * 主键
-	 */
-	@TableField("id")
-	private Long id;
+public class ProjectExperienceEntity extends BaseEntity implements Serializable {
 
 	/**
 	 * 开发工具

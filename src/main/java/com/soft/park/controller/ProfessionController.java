@@ -1,16 +1,17 @@
 package com.soft.park.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.soft.park.dto.ProfessionDTO;
 import com.soft.park.result.Result;
 import com.soft.park.service.IProfessionService;
 import com.soft.park.vo.ProfessionVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:15
+ * @date 2024-06-18 17:45:46
  * @description 专业表(Profession)控制层
  */
 @RestController
@@ -27,12 +28,11 @@ public class ProfessionController {
 	 * 分页查询
 	 *
 	 * @param professionVO 筛选条件
-	 * @param pageRequest  分页对象
 	 * @return 查询结果
 	 */
-	@GetMapping("list-page")
-	public Result queryByPage(ProfessionVO professionVO, PageRequest pageRequest) {
-		return Result.success(this.iProfessionService.queryByPage(professionVO, pageRequest));
+	@GetMapping("/list-page")
+	public Result<IPage<ProfessionDTO>> queryByPage(ProfessionVO professionVO) {
+		return Result.success(this.iProfessionService.queryByPage(professionVO));
 	}
 
 	/**

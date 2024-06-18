@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-11 16:07:40
+ * @date 2024-06-18 17:42:24
  * @description 区域表(Regions)VO类
  */
 @Data

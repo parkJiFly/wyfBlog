@@ -10,20 +10,12 @@ import java.util.Date;
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:10
+ * @date 2024-06-18 17:42:19
  * @description
  */
 @Data
 @TableName("company_info")
-public class CompanyInfoEntity implements Serializable {
-
-	private static final long serialVersionUID = -63418897936439447L;
-
-	/**
-	 * 主键
-	 */
-	@TableField("id")
-	private Long id;
+public class CompanyInfoEntity extends BaseEntity implements Serializable {
 
 	/**
 	 * 公司名称

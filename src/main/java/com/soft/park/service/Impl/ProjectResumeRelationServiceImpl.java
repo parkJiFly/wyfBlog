@@ -1,25 +1,23 @@
 package com.soft.park.service.Impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.soft.park.dto.ProjectResumeRelationDTO;
 import com.soft.park.entity.ProjectResumeRelationEntity;
 import com.soft.park.mapper.ProjectResumeRelationMapper;
+import com.soft.park.result.ResultPage;
 import com.soft.park.service.IProjectResumeRelationService;
 import com.soft.park.utils.BeanUtil;
+import com.soft.park.utils.ToolUtil;
 import com.soft.park.vo.ProjectResumeRelationVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:19
+ * @date 2024-06-18 18:15:16
  * @description 项目简历关联表(ProjectResumeRelation)表服务实现类
  */
 @Service
@@ -37,7 +35,7 @@ public class ProjectResumeRelationServiceImpl extends ServiceImpl<ProjectResumeR
 	 */
 	@Override
 	public ProjectResumeRelationDTO queryById(Long id) {
-		ProjectResumeRelationEntity projectResumeRelationEntity = this.projectResumeRelationMapper.queryById(id);
+		ProjectResumeRelationEntity projectResumeRelationEntity = this.getById(id);
 		return BeanUtil.copy(projectResumeRelationEntity, ProjectResumeRelationDTO.class);
 	}
 
@@ -45,15 +43,15 @@ public class ProjectResumeRelationServiceImpl extends ServiceImpl<ProjectResumeR
 	 * 分页查询
 	 *
 	 * @param projectResumeRelationVO 筛选条件
-	 * @param pageRequest             分页对象
 	 * @return 查询结果
 	 */
 	@Override
-	public Page<ProjectResumeRelationDTO> queryByPage(ProjectResumeRelationVO projectResumeRelationVO, PageRequest pageRequest) {
-		long total = this.projectResumeRelationMapper.count(projectResumeRelationVO);
-		List<ProjectResumeRelationEntity> projectResumeRelationEntityS = this.projectResumeRelationMapper.queryAllByLimit(projectResumeRelationVO, pageRequest);
-		List<ProjectResumeRelationDTO> projectResumeRelationDTOS = BeanUtil.copyToList(projectResumeRelationEntityS, ProjectResumeRelationDTO.class);
-		return new PageImpl<>(projectResumeRelationDTOS, pageRequest, total);
+	public ResultPage<ProjectResumeRelationDTO> queryByPage(ProjectResumeRelationVO projectResumeRelationVO) {
+		Page<ProjectResumeRelationEntity> Page = new Page<>(projectResumeRelationVO.getPageNo(), projectResumeRelationVO.getPageSize());
+		Page<ProjectResumeRelationEntity> entityPage = this.page(Page);
+
+		ResultPage<ProjectResumeRelationDTO> resultPage = ToolUtil.convertEntityPageToToPage(entityPage, ProjectResumeRelationDTO.class);
+		return resultPage;
 	}
 
 	/**
@@ -65,7 +63,7 @@ public class ProjectResumeRelationServiceImpl extends ServiceImpl<ProjectResumeR
 	@Override
 	public ProjectResumeRelationDTO insert(ProjectResumeRelationVO projectResumeRelationVO) {
 		ProjectResumeRelationEntity projectResumeRelationEntity = BeanUtil.copy(projectResumeRelationVO, ProjectResumeRelationEntity.class);
-		this.projectResumeRelationMapper.insert(projectResumeRelationEntity);
+		super.saveOrUpdate(projectResumeRelationEntity);
 		return BeanUtil.copy(projectResumeRelationEntity, ProjectResumeRelationDTO.class);
 	}
 
@@ -78,8 +76,8 @@ public class ProjectResumeRelationServiceImpl extends ServiceImpl<ProjectResumeR
 	@Override
 	public ProjectResumeRelationDTO update(ProjectResumeRelationVO projectResumeRelationVO) {
 		ProjectResumeRelationEntity projectResumeRelationEntity = BeanUtil.copy(projectResumeRelationVO, ProjectResumeRelationEntity.class);
-		this.projectResumeRelationMapper.update(projectResumeRelationEntity);
-		return this.queryById(projectResumeRelationVO.getId());
+		super.saveOrUpdate(projectResumeRelationEntity);
+		return BeanUtil.copy(projectResumeRelationEntity, ProjectResumeRelationDTO.class);
 	}
 
 	/**

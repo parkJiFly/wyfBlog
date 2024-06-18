@@ -1,16 +1,17 @@
 package com.soft.park.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.soft.park.dto.RoleFieldPermissionsDTO;
 import com.soft.park.result.Result;
 import com.soft.park.service.IRoleFieldPermissionsService;
 import com.soft.park.vo.RoleFieldPermissionsVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-14 17:40:39
+ * @date 2024-06-18 17:45:46
  * @description 角色字段权限关联表(RoleFieldPermissions)控制层
  */
 @RestController
@@ -27,12 +28,11 @@ public class RoleFieldPermissionsController {
 	 * 分页查询
 	 *
 	 * @param roleFieldPermissionsVO 筛选条件
-	 * @param pageRequest            分页对象
 	 * @return 查询结果
 	 */
-	@GetMapping("list-page")
-	public Result queryByPage(RoleFieldPermissionsVO roleFieldPermissionsVO, PageRequest pageRequest) {
-		return Result.success(this.iRoleFieldPermissionsService.queryByPage(roleFieldPermissionsVO, pageRequest));
+	@GetMapping("/list-page")
+	public Result<IPage<RoleFieldPermissionsDTO>> queryByPage(RoleFieldPermissionsVO roleFieldPermissionsVO) {
+		return Result.success(this.iRoleFieldPermissionsService.queryByPage(roleFieldPermissionsVO));
 	}
 
 	/**

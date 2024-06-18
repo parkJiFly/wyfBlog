@@ -3,14 +3,13 @@ package com.soft.park.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.soft.park.dto.PositionDTO;
 import com.soft.park.entity.PositionEntity;
+import com.soft.park.result.ResultPage;
 import com.soft.park.vo.PositionVO;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:14
+ * @date 2024-06-18 17:42:21
  * @description 岗位表(Position)表服务接口
  */
 public interface IPositionService extends IService<PositionEntity> {
@@ -27,10 +26,9 @@ public interface IPositionService extends IService<PositionEntity> {
 	 * 分页查询
 	 *
 	 * @param positionVO  筛选条件
-	 * @param pageRequest 分页对象
 	 * @return 查询结果
 	 */
-	Page<PositionDTO> queryByPage(PositionVO positionVO, PageRequest pageRequest);
+	ResultPage<PositionDTO> queryByPage(PositionVO positionVO);
 
 	/**
 	 * 新增数据

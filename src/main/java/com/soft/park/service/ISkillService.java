@@ -3,14 +3,13 @@ package com.soft.park.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.soft.park.dto.SkillDTO;
 import com.soft.park.entity.SkillEntity;
+import com.soft.park.result.ResultPage;
 import com.soft.park.vo.SkillVO;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:20
+ * @date 2024-06-18 17:42:30
  * @description 技术能力情况表(Skill)表服务接口
  */
 public interface ISkillService extends IService<SkillEntity> {
@@ -27,10 +26,9 @@ public interface ISkillService extends IService<SkillEntity> {
 	 * 分页查询
 	 *
 	 * @param skillVO     筛选条件
-	 * @param pageRequest 分页对象
 	 * @return 查询结果
 	 */
-	Page<SkillDTO> queryByPage(SkillVO skillVO, PageRequest pageRequest);
+	ResultPage<SkillDTO> queryByPage(SkillVO skillVO);
 
 	/**
 	 * 新增数据

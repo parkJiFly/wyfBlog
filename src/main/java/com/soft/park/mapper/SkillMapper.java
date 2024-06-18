@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:20
+ * @date 2024-06-18 17:42:30
  * @description 技术能力情况表(Skill)mapper层
  */
 @Mapper

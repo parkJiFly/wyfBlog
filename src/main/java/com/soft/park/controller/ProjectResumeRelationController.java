@@ -1,16 +1,17 @@
 package com.soft.park.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.soft.park.dto.ProjectResumeRelationDTO;
 import com.soft.park.result.Result;
 import com.soft.park.service.IProjectResumeRelationService;
 import com.soft.park.vo.ProjectResumeRelationVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:18
+ * @date 2024-06-18 17:45:46
  * @description 项目简历关联表(ProjectResumeRelation)控制层
  */
 @RestController
@@ -27,12 +28,11 @@ public class ProjectResumeRelationController {
 	 * 分页查询
 	 *
 	 * @param projectResumeRelationVO 筛选条件
-	 * @param pageRequest             分页对象
 	 * @return 查询结果
 	 */
-	@GetMapping("list-page")
-	public Result queryByPage(ProjectResumeRelationVO projectResumeRelationVO, PageRequest pageRequest) {
-		return Result.success(this.iProjectResumeRelationService.queryByPage(projectResumeRelationVO, pageRequest));
+	@GetMapping("/list-page")
+	public Result<IPage<ProjectResumeRelationDTO>> queryByPage(ProjectResumeRelationVO projectResumeRelationVO) {
+		return Result.success(this.iProjectResumeRelationService.queryByPage(projectResumeRelationVO));
 	}
 
 	/**

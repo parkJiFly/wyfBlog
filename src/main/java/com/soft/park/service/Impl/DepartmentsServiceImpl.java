@@ -1,25 +1,23 @@
 package com.soft.park.service.Impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.soft.park.dto.DepartmentsDTO;
 import com.soft.park.entity.DepartmentsEntity;
 import com.soft.park.mapper.DepartmentsMapper;
+import com.soft.park.result.ResultPage;
 import com.soft.park.service.IDepartmentsService;
 import com.soft.park.utils.BeanUtil;
+import com.soft.park.utils.ToolUtil;
 import com.soft.park.vo.DepartmentsVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-14 17:41:47
+ * @date 2024-06-18 18:15:16
  * @description 部门表(Departments)表服务实现类
  */
 @Service
@@ -37,7 +35,7 @@ public class DepartmentsServiceImpl extends ServiceImpl<DepartmentsMapper, Depar
 	 */
 	@Override
 	public DepartmentsDTO queryById(Long id) {
-		DepartmentsEntity departmentsEntity = this.departmentsMapper.queryById(id);
+		DepartmentsEntity departmentsEntity = this.getById(id);
 		return BeanUtil.copy(departmentsEntity, DepartmentsDTO.class);
 	}
 
@@ -45,15 +43,15 @@ public class DepartmentsServiceImpl extends ServiceImpl<DepartmentsMapper, Depar
 	 * 分页查询
 	 *
 	 * @param departmentsVO 筛选条件
-	 * @param pageRequest   分页对象
 	 * @return 查询结果
 	 */
 	@Override
-	public Page<DepartmentsDTO> queryByPage(DepartmentsVO departmentsVO, PageRequest pageRequest) {
-		long total = this.departmentsMapper.count(departmentsVO);
-		List<DepartmentsEntity> departmentsEntityS = this.departmentsMapper.queryAllByLimit(departmentsVO, pageRequest);
-		List<DepartmentsDTO> departmentsDTOS = BeanUtil.copyToList(departmentsEntityS, DepartmentsDTO.class);
-		return new PageImpl<>(departmentsDTOS, pageRequest, total);
+	public ResultPage<DepartmentsDTO> queryByPage(DepartmentsVO departmentsVO) {
+		Page<DepartmentsEntity> Page = new Page<>(departmentsVO.getPageNo(), departmentsVO.getPageSize());
+		Page<DepartmentsEntity> entityPage = this.page(Page);
+
+		ResultPage<DepartmentsDTO> resultPage = ToolUtil.convertEntityPageToToPage(entityPage, DepartmentsDTO.class);
+		return resultPage;
 	}
 
 	/**
@@ -65,7 +63,7 @@ public class DepartmentsServiceImpl extends ServiceImpl<DepartmentsMapper, Depar
 	@Override
 	public DepartmentsDTO insert(DepartmentsVO departmentsVO) {
 		DepartmentsEntity departmentsEntity = BeanUtil.copy(departmentsVO, DepartmentsEntity.class);
-		this.departmentsMapper.insert(departmentsEntity);
+		super.saveOrUpdate(departmentsEntity);
 		return BeanUtil.copy(departmentsEntity, DepartmentsDTO.class);
 	}
 
@@ -78,8 +76,8 @@ public class DepartmentsServiceImpl extends ServiceImpl<DepartmentsMapper, Depar
 	@Override
 	public DepartmentsDTO update(DepartmentsVO departmentsVO) {
 		DepartmentsEntity departmentsEntity = BeanUtil.copy(departmentsVO, DepartmentsEntity.class);
-		this.departmentsMapper.update(departmentsEntity);
-		return this.queryById(departmentsVO.getId());
+		super.saveOrUpdate(departmentsEntity);
+		return BeanUtil.copy(departmentsEntity, DepartmentsDTO.class);
 	}
 
 	/**

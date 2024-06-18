@@ -10,20 +10,12 @@ import java.util.Date;
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:20
+ * @date 2024-06-18 17:42:29
  * @description
  */
 @Data
 @TableName("skill")
-public class SkillEntity implements Serializable {
-
-	private static final long serialVersionUID = 695742545862653398L;
-
-	/**
-	 * 主键
-	 */
-	@TableField("id")
-	private Long id;
+public class SkillEntity extends BaseEntity implements Serializable {
 
 	/**
 	 * 简历ID

@@ -10,20 +10,13 @@ import java.util.Date;
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:19
+ * @date 2024-06-18 17:42:23
  * @description
  */
 @Data
 @TableName("project_resume_relation")
-public class ProjectResumeRelationEntity implements Serializable {
+public class ProjectResumeRelationEntity extends BaseEntity implements Serializable {
 
-	private static final long serialVersionUID = 262843898195725140L;
-
-	/**
-	 * 主键
-	 */
-	@TableField("id")
-	private Long id;
 
 	/**
 	 * 简历ID

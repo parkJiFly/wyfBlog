@@ -10,20 +10,14 @@ import java.util.Date;
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-14 17:44:11
+ * @date 2024-06-18 17:42:20
  * @description
  */
 @Data
 @TableName("field_permissions")
-public class FieldPermissionsEntity implements Serializable {
+public class FieldPermissionsEntity extends BaseEntity implements Serializable {
 
-	private static final long serialVersionUID = 381454762822790226L;
 
-	/**
-	 * 字段权限ID
-	 */
-	@TableField("id")
-	private Long id;
 
 	/**
 	 * 字段权限名称

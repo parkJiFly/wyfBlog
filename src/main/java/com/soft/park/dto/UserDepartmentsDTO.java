@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-14 17:40:43
+ * @date 2024-06-18 17:42:31
  * @description 用户部门关联表(UserDepartments)DTO类
  */
 @Data

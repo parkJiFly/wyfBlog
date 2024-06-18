@@ -3,14 +3,13 @@ package com.soft.park.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.soft.park.dto.CompanyInfoDTO;
 import com.soft.park.entity.CompanyInfoEntity;
+import com.soft.park.result.ResultPage;
 import com.soft.park.vo.CompanyInfoVO;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:12
+ * @date 2024-06-18 17:42:19
  * @description 公司信息表(CompanyInfo)表服务接口
  */
 public interface ICompanyInfoService extends IService<CompanyInfoEntity> {
@@ -27,10 +26,9 @@ public interface ICompanyInfoService extends IService<CompanyInfoEntity> {
 	 * 分页查询
 	 *
 	 * @param companyInfoVO 筛选条件
-	 * @param pageRequest   分页对象
 	 * @return 查询结果
 	 */
-	Page<CompanyInfoDTO> queryByPage(CompanyInfoVO companyInfoVO, PageRequest pageRequest);
+	ResultPage<CompanyInfoDTO> queryByPage(CompanyInfoVO companyInfoVO);
 
 	/**
 	 * 新增数据

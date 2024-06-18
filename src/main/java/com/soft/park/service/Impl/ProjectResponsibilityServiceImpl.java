@@ -1,25 +1,23 @@
 package com.soft.park.service.Impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.soft.park.dto.ProjectResponsibilityDTO;
 import com.soft.park.entity.ProjectResponsibilityEntity;
 import com.soft.park.mapper.ProjectResponsibilityMapper;
+import com.soft.park.result.ResultPage;
 import com.soft.park.service.IProjectResponsibilityService;
 import com.soft.park.utils.BeanUtil;
+import com.soft.park.utils.ToolUtil;
 import com.soft.park.vo.ProjectResponsibilityVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:18
+ * @date 2024-06-18 18:15:16
  * @description 项目责任描述表(ProjectResponsibility)表服务实现类
  */
 @Service
@@ -37,7 +35,7 @@ public class ProjectResponsibilityServiceImpl extends ServiceImpl<ProjectRespons
 	 */
 	@Override
 	public ProjectResponsibilityDTO queryById(Long id) {
-		ProjectResponsibilityEntity projectResponsibilityEntity = this.projectResponsibilityMapper.queryById(id);
+		ProjectResponsibilityEntity projectResponsibilityEntity = this.getById(id);
 		return BeanUtil.copy(projectResponsibilityEntity, ProjectResponsibilityDTO.class);
 	}
 
@@ -45,15 +43,15 @@ public class ProjectResponsibilityServiceImpl extends ServiceImpl<ProjectRespons
 	 * 分页查询
 	 *
 	 * @param projectResponsibilityVO 筛选条件
-	 * @param pageRequest             分页对象
 	 * @return 查询结果
 	 */
 	@Override
-	public Page<ProjectResponsibilityDTO> queryByPage(ProjectResponsibilityVO projectResponsibilityVO, PageRequest pageRequest) {
-		long total = this.projectResponsibilityMapper.count(projectResponsibilityVO);
-		List<ProjectResponsibilityEntity> projectResponsibilityEntityS = this.projectResponsibilityMapper.queryAllByLimit(projectResponsibilityVO, pageRequest);
-		List<ProjectResponsibilityDTO> projectResponsibilityDTOS = BeanUtil.copyToList(projectResponsibilityEntityS, ProjectResponsibilityDTO.class);
-		return new PageImpl<>(projectResponsibilityDTOS, pageRequest, total);
+	public ResultPage<ProjectResponsibilityDTO> queryByPage(ProjectResponsibilityVO projectResponsibilityVO) {
+		Page<ProjectResponsibilityEntity> Page = new Page<>(projectResponsibilityVO.getPageNo(), projectResponsibilityVO.getPageSize());
+		Page<ProjectResponsibilityEntity> entityPage = this.page(Page);
+
+		ResultPage<ProjectResponsibilityDTO> resultPage = ToolUtil.convertEntityPageToToPage(entityPage, ProjectResponsibilityDTO.class);
+		return resultPage;
 	}
 
 	/**
@@ -65,7 +63,7 @@ public class ProjectResponsibilityServiceImpl extends ServiceImpl<ProjectRespons
 	@Override
 	public ProjectResponsibilityDTO insert(ProjectResponsibilityVO projectResponsibilityVO) {
 		ProjectResponsibilityEntity projectResponsibilityEntity = BeanUtil.copy(projectResponsibilityVO, ProjectResponsibilityEntity.class);
-		this.projectResponsibilityMapper.insert(projectResponsibilityEntity);
+		super.saveOrUpdate(projectResponsibilityEntity);
 		return BeanUtil.copy(projectResponsibilityEntity, ProjectResponsibilityDTO.class);
 	}
 
@@ -78,8 +76,8 @@ public class ProjectResponsibilityServiceImpl extends ServiceImpl<ProjectRespons
 	@Override
 	public ProjectResponsibilityDTO update(ProjectResponsibilityVO projectResponsibilityVO) {
 		ProjectResponsibilityEntity projectResponsibilityEntity = BeanUtil.copy(projectResponsibilityVO, ProjectResponsibilityEntity.class);
-		this.projectResponsibilityMapper.update(projectResponsibilityEntity);
-		return this.queryById(projectResponsibilityVO.getId());
+		super.saveOrUpdate(projectResponsibilityEntity);
+		return BeanUtil.copy(projectResponsibilityEntity, ProjectResponsibilityDTO.class);
 	}
 
 	/**

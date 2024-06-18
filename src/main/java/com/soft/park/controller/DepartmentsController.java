@@ -1,16 +1,17 @@
 package com.soft.park.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.soft.park.dto.DepartmentsDTO;
 import com.soft.park.result.Result;
 import com.soft.park.service.IDepartmentsService;
 import com.soft.park.vo.DepartmentsVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-14 17:39:11
+ * @date 2024-06-18 17:45:46
  * @description 部门表(Departments)控制层
  */
 @RestController
@@ -27,12 +28,11 @@ public class DepartmentsController {
 	 * 分页查询
 	 *
 	 * @param departmentsVO 筛选条件
-	 * @param pageRequest   分页对象
 	 * @return 查询结果
 	 */
-	@GetMapping("list-page")
-	public Result queryByPage(DepartmentsVO departmentsVO, PageRequest pageRequest) {
-		return Result.success(this.iDepartmentsService.queryByPage(departmentsVO, pageRequest));
+	@GetMapping("/list-page")
+	public Result<IPage<DepartmentsDTO>> queryByPage(DepartmentsVO departmentsVO) {
+		return Result.success(this.iDepartmentsService.queryByPage(departmentsVO));
 	}
 
 	/**

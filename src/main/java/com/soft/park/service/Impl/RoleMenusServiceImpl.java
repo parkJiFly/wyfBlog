@@ -1,25 +1,23 @@
 package com.soft.park.service.Impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.soft.park.dto.RoleMenusDTO;
 import com.soft.park.entity.RoleMenusEntity;
 import com.soft.park.mapper.RoleMenusMapper;
+import com.soft.park.result.ResultPage;
 import com.soft.park.service.IRoleMenusService;
 import com.soft.park.utils.BeanUtil;
+import com.soft.park.utils.ToolUtil;
 import com.soft.park.vo.RoleMenusVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-14 17:40:41
+ * @date 2024-06-18 18:15:16
  * @description 角色菜单关联表(RoleMenus)表服务实现类
  */
 @Service
@@ -37,7 +35,7 @@ public class RoleMenusServiceImpl extends ServiceImpl<RoleMenusMapper, RoleMenus
 	 */
 	@Override
 	public RoleMenusDTO queryById(Long roleId) {
-		RoleMenusEntity roleMenusEntity = this.roleMenusMapper.queryById(roleId);
+		RoleMenusEntity roleMenusEntity = this.getById(roleId);
 		return BeanUtil.copy(roleMenusEntity, RoleMenusDTO.class);
 	}
 
@@ -45,15 +43,15 @@ public class RoleMenusServiceImpl extends ServiceImpl<RoleMenusMapper, RoleMenus
 	 * 分页查询
 	 *
 	 * @param roleMenusVO 筛选条件
-	 * @param pageRequest 分页对象
 	 * @return 查询结果
 	 */
 	@Override
-	public Page<RoleMenusDTO> queryByPage(RoleMenusVO roleMenusVO, PageRequest pageRequest) {
-		long total = this.roleMenusMapper.count(roleMenusVO);
-		List<RoleMenusEntity> roleMenusEntityS = this.roleMenusMapper.queryAllByLimit(roleMenusVO, pageRequest);
-		List<RoleMenusDTO> roleMenusDTOS = BeanUtil.copyToList(roleMenusEntityS, RoleMenusDTO.class);
-		return new PageImpl<>(roleMenusDTOS, pageRequest, total);
+	public ResultPage<RoleMenusDTO> queryByPage(RoleMenusVO roleMenusVO) {
+		Page<RoleMenusEntity> Page = new Page<>(roleMenusVO.getPageNo(), roleMenusVO.getPageSize());
+		Page<RoleMenusEntity> entityPage = this.page(Page);
+
+		ResultPage<RoleMenusDTO> resultPage = ToolUtil.convertEntityPageToToPage(entityPage, RoleMenusDTO.class);
+		return resultPage;
 	}
 
 	/**
@@ -65,7 +63,7 @@ public class RoleMenusServiceImpl extends ServiceImpl<RoleMenusMapper, RoleMenus
 	@Override
 	public RoleMenusDTO insert(RoleMenusVO roleMenusVO) {
 		RoleMenusEntity roleMenusEntity = BeanUtil.copy(roleMenusVO, RoleMenusEntity.class);
-		this.roleMenusMapper.insert(roleMenusEntity);
+		super.saveOrUpdate(roleMenusEntity);
 		return BeanUtil.copy(roleMenusEntity, RoleMenusDTO.class);
 	}
 
@@ -78,8 +76,8 @@ public class RoleMenusServiceImpl extends ServiceImpl<RoleMenusMapper, RoleMenus
 	@Override
 	public RoleMenusDTO update(RoleMenusVO roleMenusVO) {
 		RoleMenusEntity roleMenusEntity = BeanUtil.copy(roleMenusVO, RoleMenusEntity.class);
-		this.roleMenusMapper.update(roleMenusEntity);
-		return this.queryById(roleMenusVO.getRoleId());
+		super.saveOrUpdate(roleMenusEntity);
+		return BeanUtil.copy(roleMenusEntity, RoleMenusDTO.class);
 	}
 
 	/**

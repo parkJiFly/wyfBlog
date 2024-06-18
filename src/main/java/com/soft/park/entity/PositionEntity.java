@@ -10,20 +10,13 @@ import java.util.Date;
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:13
+ * @date 2024-06-18 17:42:21
  * @description
  */
 @Data
 @TableName("position")
-public class PositionEntity implements Serializable {
+public class PositionEntity extends BaseEntity implements Serializable {
 
-	private static final long serialVersionUID = 723013757964315690L;
-
-	/**
-	 * 主键
-	 */
-	@TableField("id")
-	private Long id;
 
 	/**
 	 * 上级节点ID

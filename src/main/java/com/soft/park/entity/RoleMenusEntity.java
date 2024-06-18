@@ -10,20 +10,16 @@ import java.util.Date;
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-14 17:40:41
+ * @date 2024-06-18 17:42:25
  * @description
  */
 @Data
 @TableName("role_menus")
-public class RoleMenusEntity implements Serializable {
+public class RoleMenusEntity extends BaseEntity implements Serializable {
 
-	private static final long serialVersionUID = -17760223144171651L;
+	private static final long serialVersionUID = 405667491459258147L;
 
-	/**
-	 * 角色ID
-	 */
-	@TableField("role_id")
-	private Long roleId;
+
 
 	/**
 	 * 菜单ID

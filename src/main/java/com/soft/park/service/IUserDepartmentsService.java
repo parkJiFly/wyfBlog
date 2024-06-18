@@ -3,14 +3,13 @@ package com.soft.park.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.soft.park.dto.UserDepartmentsDTO;
 import com.soft.park.entity.UserDepartmentsEntity;
+import com.soft.park.result.ResultPage;
 import com.soft.park.vo.UserDepartmentsVO;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-14 17:40:43
+ * @date 2024-06-18 17:42:31
  * @description 用户部门关联表(UserDepartments)表服务接口
  */
 public interface IUserDepartmentsService extends IService<UserDepartmentsEntity> {
@@ -27,10 +26,9 @@ public interface IUserDepartmentsService extends IService<UserDepartmentsEntity>
 	 * 分页查询
 	 *
 	 * @param userDepartmentsVO 筛选条件
-	 * @param pageRequest       分页对象
 	 * @return 查询结果
 	 */
-	Page<UserDepartmentsDTO> queryByPage(UserDepartmentsVO userDepartmentsVO, PageRequest pageRequest);
+	ResultPage<UserDepartmentsDTO> queryByPage(UserDepartmentsVO userDepartmentsVO);
 
 	/**
 	 * 新增数据

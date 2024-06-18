@@ -9,20 +9,13 @@ import java.io.Serializable;
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-11 15:25:51
+ * @date 2024-06-18 17:42:24
  * @description
  */
 @Data
 @TableName("regions")
-public class RegionsEntity implements Serializable {
+public class RegionsEntity extends BaseEntity implements Serializable {
 
-	private static final long serialVersionUID = 650934429131495257L;
-
-	/**
-	 * 区域ID
-	 */
-	@TableField("id")
-	private String id;
 
 	/**
 	 * 区域名称

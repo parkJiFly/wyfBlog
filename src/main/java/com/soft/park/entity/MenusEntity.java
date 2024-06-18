@@ -10,20 +10,14 @@ import java.util.Date;
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-14 17:40:11
+ * @date 2024-06-18 17:42:21
  * @description
  */
 @Data
 @TableName("menus")
-public class MenusEntity implements Serializable {
+public class MenusEntity extends BaseEntity implements Serializable {
 
-	private static final long serialVersionUID = -45528596471469589L;
 
-	/**
-	 * 菜单ID
-	 */
-	@TableField("id")
-	private Long id;
 
 	/**
 	 * 菜单名称

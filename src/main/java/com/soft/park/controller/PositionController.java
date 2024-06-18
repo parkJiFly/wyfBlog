@@ -1,16 +1,17 @@
 package com.soft.park.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.soft.park.dto.PositionDTO;
 import com.soft.park.result.Result;
 import com.soft.park.service.IPositionService;
 import com.soft.park.vo.PositionVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:13
+ * @date 2024-06-18 17:45:46
  * @description 岗位表(Position)控制层
  */
 @RestController
@@ -26,13 +27,12 @@ public class PositionController {
 	/**
 	 * 分页查询
 	 *
-	 * @param positionVO  筛选条件
-	 * @param pageRequest 分页对象
+	 * @param positionVO 筛选条件
 	 * @return 查询结果
 	 */
-	@GetMapping("list-page")
-	public Result queryByPage(PositionVO positionVO, PageRequest pageRequest) {
-		return Result.success(this.iPositionService.queryByPage(positionVO, pageRequest));
+	@GetMapping("/list-page")
+	public Result<IPage<PositionDTO>> queryByPage(PositionVO positionVO) {
+		return Result.success(this.iPositionService.queryByPage(positionVO));
 	}
 
 	/**

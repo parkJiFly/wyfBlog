@@ -1,25 +1,23 @@
 package com.soft.park.service.Impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.soft.park.dto.UserRolesDTO;
 import com.soft.park.entity.UserRolesEntity;
 import com.soft.park.mapper.UserRolesMapper;
+import com.soft.park.result.ResultPage;
 import com.soft.park.service.IUserRolesService;
 import com.soft.park.utils.BeanUtil;
+import com.soft.park.utils.ToolUtil;
 import com.soft.park.vo.UserRolesVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-14 17:40:44
+ * @date 2024-06-18 18:15:17
  * @description 用户角色关联表(UserRoles)表服务实现类
  */
 @Service
@@ -37,7 +35,7 @@ public class UserRolesServiceImpl extends ServiceImpl<UserRolesMapper, UserRoles
 	 */
 	@Override
 	public UserRolesDTO queryById(Long userId) {
-		UserRolesEntity userRolesEntity = this.userRolesMapper.queryById(userId);
+		UserRolesEntity userRolesEntity = this.getById(userId);
 		return BeanUtil.copy(userRolesEntity, UserRolesDTO.class);
 	}
 
@@ -45,15 +43,15 @@ public class UserRolesServiceImpl extends ServiceImpl<UserRolesMapper, UserRoles
 	 * 分页查询
 	 *
 	 * @param userRolesVO 筛选条件
-	 * @param pageRequest 分页对象
 	 * @return 查询结果
 	 */
 	@Override
-	public Page<UserRolesDTO> queryByPage(UserRolesVO userRolesVO, PageRequest pageRequest) {
-		long total = this.userRolesMapper.count(userRolesVO);
-		List<UserRolesEntity> userRolesEntityS = this.userRolesMapper.queryAllByLimit(userRolesVO, pageRequest);
-		List<UserRolesDTO> userRolesDTOS = BeanUtil.copyToList(userRolesEntityS, UserRolesDTO.class);
-		return new PageImpl<>(userRolesDTOS, pageRequest, total);
+	public ResultPage<UserRolesDTO> queryByPage(UserRolesVO userRolesVO) {
+		Page<UserRolesEntity> Page = new Page<>(userRolesVO.getPageNo(), userRolesVO.getPageSize());
+		Page<UserRolesEntity> entityPage = this.page(Page);
+
+		ResultPage<UserRolesDTO> resultPage = ToolUtil.convertEntityPageToToPage(entityPage, UserRolesDTO.class);
+		return resultPage;
 	}
 
 	/**
@@ -65,7 +63,7 @@ public class UserRolesServiceImpl extends ServiceImpl<UserRolesMapper, UserRoles
 	@Override
 	public UserRolesDTO insert(UserRolesVO userRolesVO) {
 		UserRolesEntity userRolesEntity = BeanUtil.copy(userRolesVO, UserRolesEntity.class);
-		this.userRolesMapper.insert(userRolesEntity);
+		super.saveOrUpdate(userRolesEntity);
 		return BeanUtil.copy(userRolesEntity, UserRolesDTO.class);
 	}
 
@@ -78,8 +76,8 @@ public class UserRolesServiceImpl extends ServiceImpl<UserRolesMapper, UserRoles
 	@Override
 	public UserRolesDTO update(UserRolesVO userRolesVO) {
 		UserRolesEntity userRolesEntity = BeanUtil.copy(userRolesVO, UserRolesEntity.class);
-		this.userRolesMapper.update(userRolesEntity);
-		return this.queryById(userRolesVO.getUserId());
+		super.saveOrUpdate(userRolesEntity);
+		return BeanUtil.copy(userRolesEntity, UserRolesDTO.class);
 	}
 
 	/**

@@ -1,25 +1,23 @@
 package com.soft.park.service.Impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.soft.park.dto.MenusDTO;
 import com.soft.park.entity.MenusEntity;
 import com.soft.park.mapper.MenusMapper;
+import com.soft.park.result.ResultPage;
 import com.soft.park.service.IMenusService;
 import com.soft.park.utils.BeanUtil;
+import com.soft.park.utils.ToolUtil;
 import com.soft.park.vo.MenusVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-14 17:40:11
+ * @date 2024-06-18 18:15:16
  * @description 菜单表(Menus)表服务实现类
  */
 @Service
@@ -37,23 +35,23 @@ public class MenusServiceImpl extends ServiceImpl<MenusMapper, MenusEntity> impl
 	 */
 	@Override
 	public MenusDTO queryById(Long id) {
-		MenusEntity menusEntity = this.menusMapper.queryById(id);
+		MenusEntity menusEntity = this.getById(id);
 		return BeanUtil.copy(menusEntity, MenusDTO.class);
 	}
 
 	/**
 	 * 分页查询
 	 *
-	 * @param menusVO     筛选条件
-	 * @param pageRequest 分页对象
+	 * @param menusVO 筛选条件
 	 * @return 查询结果
 	 */
 	@Override
-	public Page<MenusDTO> queryByPage(MenusVO menusVO, PageRequest pageRequest) {
-		long total = this.menusMapper.count(menusVO);
-		List<MenusEntity> menusEntityS = this.menusMapper.queryAllByLimit(menusVO, pageRequest);
-		List<MenusDTO> menusDTOS = BeanUtil.copyToList(menusEntityS, MenusDTO.class);
-		return new PageImpl<>(menusDTOS, pageRequest, total);
+	public ResultPage<MenusDTO> queryByPage(MenusVO menusVO) {
+		Page<MenusEntity> Page = new Page<>(menusVO.getPageNo(), menusVO.getPageSize());
+		Page<MenusEntity> entityPage = this.page(Page);
+
+		ResultPage<MenusDTO> resultPage = ToolUtil.convertEntityPageToToPage(entityPage, MenusDTO.class);
+		return resultPage;
 	}
 
 	/**
@@ -65,7 +63,7 @@ public class MenusServiceImpl extends ServiceImpl<MenusMapper, MenusEntity> impl
 	@Override
 	public MenusDTO insert(MenusVO menusVO) {
 		MenusEntity menusEntity = BeanUtil.copy(menusVO, MenusEntity.class);
-		this.menusMapper.insert(menusEntity);
+		super.saveOrUpdate(menusEntity);
 		return BeanUtil.copy(menusEntity, MenusDTO.class);
 	}
 
@@ -78,8 +76,8 @@ public class MenusServiceImpl extends ServiceImpl<MenusMapper, MenusEntity> impl
 	@Override
 	public MenusDTO update(MenusVO menusVO) {
 		MenusEntity menusEntity = BeanUtil.copy(menusVO, MenusEntity.class);
-		this.menusMapper.update(menusEntity);
-		return this.queryById(menusVO.getId());
+		super.saveOrUpdate(menusEntity);
+		return BeanUtil.copy(menusEntity, MenusDTO.class);
 	}
 
 	/**

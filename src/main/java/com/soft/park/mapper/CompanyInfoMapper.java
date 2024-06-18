@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:12
+ * @date 2024-06-18 17:42:19
  * @description 公司信息表(CompanyInfo)mapper层
  */
 @Mapper

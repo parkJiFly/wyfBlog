@@ -10,20 +10,13 @@ import java.util.Date;
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:15
+ * @date 2024-06-18 17:42:22
  * @description
  */
 @Data
 @TableName("profession")
-public class ProfessionEntity implements Serializable {
+public class ProfessionEntity extends BaseEntity implements Serializable {
 
-	private static final long serialVersionUID = 908341156025846809L;
-
-	/**
-	 * 主键
-	 */
-	@TableField("id")
-	private Long id;
 
 	/**
 	 * 上级节点ID

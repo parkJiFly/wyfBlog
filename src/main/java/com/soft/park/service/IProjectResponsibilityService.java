@@ -3,14 +3,13 @@ package com.soft.park.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.soft.park.dto.ProjectResponsibilityDTO;
 import com.soft.park.entity.ProjectResponsibilityEntity;
+import com.soft.park.result.ResultPage;
 import com.soft.park.vo.ProjectResponsibilityVO;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:18
+ * @date 2024-06-18 17:42:23
  * @description 项目责任描述表(ProjectResponsibility)表服务接口
  */
 public interface IProjectResponsibilityService extends IService<ProjectResponsibilityEntity> {
@@ -27,10 +26,9 @@ public interface IProjectResponsibilityService extends IService<ProjectResponsib
 	 * 分页查询
 	 *
 	 * @param projectResponsibilityVO 筛选条件
-	 * @param pageRequest             分页对象
 	 * @return 查询结果
 	 */
-	Page<ProjectResponsibilityDTO> queryByPage(ProjectResponsibilityVO projectResponsibilityVO, PageRequest pageRequest);
+	ResultPage<ProjectResponsibilityDTO> queryByPage(ProjectResponsibilityVO projectResponsibilityVO);
 
 	/**
 	 * 新增数据

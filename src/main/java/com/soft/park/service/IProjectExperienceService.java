@@ -3,14 +3,13 @@ package com.soft.park.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.soft.park.dto.ProjectExperienceDTO;
 import com.soft.park.entity.ProjectExperienceEntity;
+import com.soft.park.result.ResultPage;
 import com.soft.park.vo.ProjectExperienceVO;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-17 19:40:17
+ * @date 2024-06-18 17:42:23
  * @description 项目经验情况表(ProjectExperience)表服务接口
  */
 public interface IProjectExperienceService extends IService<ProjectExperienceEntity> {
@@ -27,10 +26,9 @@ public interface IProjectExperienceService extends IService<ProjectExperienceEnt
 	 * 分页查询
 	 *
 	 * @param projectExperienceVO 筛选条件
-	 * @param pageRequest         分页对象
 	 * @return 查询结果
 	 */
-	Page<ProjectExperienceDTO> queryByPage(ProjectExperienceVO projectExperienceVO, PageRequest pageRequest);
+	ResultPage<ProjectExperienceDTO> queryByPage(ProjectExperienceVO projectExperienceVO);
 
 	/**
 	 * 新增数据

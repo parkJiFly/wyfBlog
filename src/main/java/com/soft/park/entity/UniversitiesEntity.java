@@ -9,26 +9,19 @@ import java.io.Serializable;
 /**
  * @version 1.0
  * @Author WenYaFei
- * @date 2024-06-11 15:26:45
+ * @date 2024-06-18 17:42:30
  * @description
  */
 @Data
 @TableName("universities")
-public class UniversitiesEntity implements Serializable {
+public class UniversitiesEntity extends BaseEntity implements Serializable {
 
-	private static final long serialVersionUID = -99383751275325912L;
-
-	/**
-	 * 大学ID
-	 */
-	@TableField("id")
-	private Integer id;
 
 	/**
 	 * 大学名称
 	 */
-	@TableField("university_name")
-	private String universityName;
+	@TableField("universities_name")
+	private String universitiesName;
 
 	/**
 	 * 省
