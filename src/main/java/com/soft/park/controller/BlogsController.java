@@ -1,14 +1,11 @@
 package com.soft.park.controller;
 
-import com.soft.park.entity.BlogsEntity;
-import com.soft.park.service.IBlogsService;
-import com.soft.park.result.Result;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-
-import java.util.List;
-
-import org.springframework.http.ResponseEntity;
+import com.soft.park.dto.BlogsDTO;
+import com.soft.park.result.Result;
+import com.soft.park.service.IBlogsService;
+import com.soft.park.vo.BlogsVO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**

@@ -1,6 +1,8 @@
 package com.soft.park.dto;
 
-import java.util.Date;
+import com.soft.park.entity.BlogsEntity;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @version 1.0
