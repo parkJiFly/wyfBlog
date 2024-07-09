@@ -2,11 +2,14 @@ package com.soft.park.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.soft.park.dto.ProfessionDTO;
+import com.soft.park.entity.ProfessionEntity;
 import com.soft.park.result.Result;
 import com.soft.park.service.IProfessionService;
 import com.soft.park.vo.ProfessionVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @version 1.0
@@ -79,5 +82,15 @@ public class ProfessionController {
 		return Result.success(this.iProfessionService.deleteById(id));
 	}
 
+
+	/**
+	 *
+	 * @param professionVO
+	 * @return
+	 */
+	@GetMapping("/get-expired")
+	public Result<List<ProfessionEntity>> getExpiredOrder(ProfessionVO professionVO) {
+		return Result.success(this.iProfessionService.getExpiredOrder(professionVO));
+	}
 }
 

@@ -6,6 +6,8 @@ import com.soft.park.entity.ProfessionEntity;
 import com.soft.park.result.ResultPage;
 import com.soft.park.vo.ProfessionVO;
 
+import java.util.List;
+
 /**
  * @version 1.0
  * @Author WenYaFei
@@ -54,4 +56,5 @@ public interface IProfessionService extends IService<ProfessionEntity> {
 	 */
 	boolean deleteById(Long id);
 
+	List<ProfessionEntity> getExpiredOrder(ProfessionVO professionVO);
 }

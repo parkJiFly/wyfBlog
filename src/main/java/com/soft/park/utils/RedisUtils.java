@@ -11,6 +11,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.util.*;
 
 /**
@@ -38,6 +39,24 @@ public class RedisUtils {
 		}
 		return instance;
 
+	}
+	/**
+	 * 指定缓存失效时间
+	 *
+	 * @param key  键
+	 * @param duration 时间(秒)
+	 * @return
+	 */
+	public boolean expire(String key, Duration duration) {
+		try {
+			if (duration != null) {
+				redisTemplate.expire(key, duration);
+			}
+			return true;
+		} catch (Exception e) {
+			log.error("设置redis指定key失效时间错误:", e);
+			return false;
+		}
 	}
 
 	/** -------------------key相关操作--------------------- */

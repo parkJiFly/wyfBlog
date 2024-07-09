@@ -1,5 +1,6 @@
 package com.soft.park.service.Impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.soft.park.dto.ProfessionDTO;
@@ -13,6 +14,10 @@ import com.soft.park.vo.ProfessionVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 /**
  * @version 1.0
@@ -89,6 +94,17 @@ public class ProfessionServiceImpl extends ServiceImpl<ProfessionMapper, Profess
 	@Override
 	public boolean deleteById(Long id) {
 		return this.professionMapper.deleteById(id) > 0;
+	}
+
+	@Override
+	public List<ProfessionEntity> getExpiredOrder(ProfessionVO professionVO) {
+		String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		LambdaQueryWrapper<ProfessionEntity> queryWrapper = new LambdaQueryWrapper<>();
+		queryWrapper.eq(ProfessionEntity::getOrderType,1)
+		.apply("DATE_FORMAT (order_time,'%Y-%m-%d')={0}", now);
+		List<ProfessionEntity> professionEntities = baseMapper.selectList(queryWrapper);
+		return professionEntities;
+
 	}
 
 }

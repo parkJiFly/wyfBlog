@@ -34,69 +34,63 @@ import java.util.Map;
 @Slf4j
 public class FileInfoServiceImpl extends ServiceImpl<FileInfoMapper, FileInfoEntity> implements IFileInfoService {
 
-	@Autowired
-	private FileInfoMapper fileInfoMapper;
+    @Autowired
+    private FileInfoMapper fileInfoMapper;
 
-	@Value("${file.upload.path}")
-	private String savePath;
+    @Value("${file.upload.path}")
+    private String savePath;
 
-	@Value("${file.view.path}")
-	private String viewPath;
+    @Value("${file.view.path}")
+    private String viewPath;
 
-	@Autowired
-	private FtpUtil ftpUtil;
+    @Autowired
+    private FtpUtil ftpUtil;
 
-	@Override
-	public Map<String, List<JSONObject>> scanFile() throws Exception {
-		FTPClient ftpClient = ftpUtil.getFtpClient();
-		if (ftpClient.isConnected()) {
-			System.out.println("ftp连接成功");
-		} else {
-			System.out.println("ftp连接失败");
-		}
-		FTPFile[] ftpFiles = ftpUtil.listFiles("/");
-		for (int i = 0; i < ftpFiles.length; i++) {
-			System.out.println(ftpFiles[i].getName());
-		}
-		//获取csv文件
-		CsvReader reader = CsvUtil.getReader();
+    @Override
+    public Map<String, List<JSONObject>> scanFile() throws Exception {
+        FTPClient ftpClient = ftpUtil.getFtpClient();
+        //获取根目录文件
+        FTPFile[] ftpFiles = ftpUtil.listFiles("/");
+        //获取csv文件
+        CsvReader reader = CsvUtil.getReader();
+        Map<String, List<JSONObject>> jsonObjectMap = new HashMap<>();
+        for (FTPFile file : ftpFiles) {
+            if (file.isFile() && file.getName().endsWith(".csv")) {
+                try {
+                    InputStream inputStream = ftpClient.retrieveFileStream(file.getName());
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
-		Map<String, List<JSONObject>> jsonObjectMap = new HashMap<>();
-		for (FTPFile file : ftpFiles) {
-			if (file.isFile() && file.getName().endsWith(".csv")) {
-				InputStream inputStream = ftpClient.retrieveFileStream(file.getName());
-				if (inputStream == null) {
-					System.out.println("Failed to retrieve file: " + file.getName());
-					continue;
-				}
-				BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                    List<JSONObject> list = new ArrayList<>();
+                    List<CsvRow> rows = reader.read(bufferedReader).getRows();
+                    List<String> rawNameList = new ArrayList<>();
+                    // 打印每一行数据
+                    for (int i = 0; i < rows.size(); i++) {
+                        if (i == 0) {
+                            rawNameList = rows.get(i).getRawList();
+                        } else {
+                            List<String> rawList = rows.get(i).getRawList();
+                            JSONObject jsonObject = new JSONObject();
+                            for (int j = 0; j < rawNameList.size(); j++) {
+                                jsonObject.set(rawNameList.get(j), rawList.get(j));
+                            }
+                            list.add(jsonObject);
+                        }
+                    }
+                    jsonObjectMap.put(file.getName().substring(0, file.getName().lastIndexOf(".")), list);
+                    inputStream.close();
+                    //关闭
+                    bufferedReader.close();
+                    //刷新
+                    ftpClient.completePendingCommand();
+                }catch (Exception e){
+                    throw e;
+                }
+            }
+        }
+        // 断开连接
+        ftpUtil.disconnectFtpClient(ftpClient);
+        return jsonObjectMap;
 
-				List<JSONObject> list = new ArrayList<>();
-				List<CsvRow> rows = reader.read(bufferedReader).getRows();
-				List<String> rawNameList = new ArrayList<>();
-				// 打印每一行数据
-				for (int i = 0; i < rows.size(); i++) {
-					if (i == 0) {
-						rawNameList = rows.get(i).getRawList();
-					} else {
-						List<String> rawList = rows.get(i).getRawList();
-						JSONObject jsonObject = new JSONObject();
-						for (int j = 0; j < rawNameList.size(); j++) {
-							jsonObject.set(rawNameList.get(j), rawList.get(j));
-						}
-						list.add(jsonObject);
-					}
-				}
-				jsonObjectMap.put(file.getName().substring(0, file.getName().lastIndexOf(".")), list);
-				inputStream.close();
-				bufferedReader.close(); // 一定要关闭
-			}
-		}
-
-		// 断开连接
-		ftpUtil.disconnectFtpClient(ftpClient);
-		return jsonObjectMap;
-
-	}
+    }
 
 }
